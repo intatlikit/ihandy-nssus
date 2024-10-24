@@ -6,6 +6,10 @@ fun String.isErrorTextFieldWith(tfMaxLength: Int): Boolean = isNotEmpty() && isN
 //fun String.isEqualsMaxLength(tfMaxLength: Int): Boolean = this.length == tfMaxLength
 fun String.isEqualsMaxLength(tfMaxLength: Int): Boolean = length == tfMaxLength
 
+//fun String.isEqualsMaxLength(tfMaxLength: Int): Boolean {
+//    return length == tfMaxLength
+//}
+
 fun isEqualMaxLength(text: String, tfMaxLength: Int): Boolean { //
     return text.length == tfMaxLength
 }
