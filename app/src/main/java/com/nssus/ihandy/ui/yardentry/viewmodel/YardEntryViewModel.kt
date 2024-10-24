@@ -17,7 +17,6 @@ import com.nssus.ihandy.model.yardentry.YardEntryErrorType
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
 import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
-import com.nssus.ihandy.ui.yardentry.util.YardEntryUtil.getDataLs
 
 class YardEntryViewModel(
 
@@ -26,14 +25,17 @@ class YardEntryViewModel(
     val yardEntryUISt: State<YardEntryUIStateModel> = _yardEntryUISt
 
     fun initData() {
-        _yardEntryUISt.value = YardEntryUIStateModel().copy(
-            dataLs = getDataLs()
-        )
+        _yardEntryUISt.value = YardEntryUIStateModel() /////////
+//            .copy(
+//            dataLs = getDataLs()
+//        )
+
     }
 
     fun action(viewAction: YardEntryAction) {
         when (viewAction) {
             is YardEntryAction.GoBack -> {
+                _yardEntryUISt.value = YardEntryUIStateModel() ///// เคลียค่า เพื่อกันเข้ามาหน้าแรกอีกรอบละที่กรอกยังอยุ
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
                     navigateType = YardEntryNavigateType.GO_BACK
                 )
@@ -71,18 +73,18 @@ class YardEntryViewModel(
                 println("DROPP value: ${value.dataLs.getSelectedItemValue()}") //
             }
             is YardEntryAction.ClickClearButton -> {
-//                onYardEntryUIStateLoading()
-                _yardEntryUISt.value = onYardEntryUIStateSuccess(
-//                    navigateType = YardEntryNavigateType.GO_BACK
-//                    successMsg = "Something"
-                ).copy(
-                    dataLs = getDataLs(),
-                    isCoilNoTfError = false,
-                    resultIconId = null,
-                    coilNo = "",
-                    yyrrcct = "",
-                    supplierNo = ""
-                )
+                _yardEntryUISt.value = YardEntryUIStateModel() // clear and then .copy( set some values to update (optional))
+//                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+////                    navigateType = YardEntryNavigateType.GO_BACK
+////                    successMsg = "Something"
+//                ).copy(
+//                    dataLs = getDataLs(),
+//                    isCoilNoTfError = false,
+//                    resultIconId = null,
+//                    coilNo = "",
+//                    yyrrcct = "",
+//                    supplierNo = ""
+//                )
             }
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
         }
