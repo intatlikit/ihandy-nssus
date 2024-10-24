@@ -6,6 +6,7 @@ import androidx.compose.ui.unit.dp
 class Dimensions(
     val space_textfield_to_textfield: Dp,
     val space_prefix_text_to_textfield: Dp,
+    val space_textfield_to_icon: Dp,
     val space_top_content_card_to_header: Dp,
     val space_between_button_to_button: Dp,
     val space_bottom_content_card_to_button: Dp,
@@ -34,6 +35,7 @@ class Dimensions(
 val defaultDimensions = Dimensions(
     space_textfield_to_textfield = 12.dp,
     space_prefix_text_to_textfield = 12.dp,
+    space_textfield_to_icon = 12.dp,
     space_top_content_card_to_header = 20.dp,
     space_between_button_to_button = 14.dp,
     space_bottom_content_card_to_button = 12.dp,
