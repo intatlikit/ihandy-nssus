@@ -1,5 +1,6 @@
 package com.nssus.ihandy.ui.basecomposable
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +21,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -244,12 +246,62 @@ fun TitleAndGrayBgValueText(
     }
 }
 
+@Composable
+fun PrefixTitleAndGrayBgValueTextWithIcon(
+    modifier: Modifier = Modifier,
+    // Title
+    @StringRes titleId: Int = R.string.common_result_title,
+    titleTextStyle: TextStyle = FontStyles.txt28,
+    titleFontWeight: FontWeight = FontWeight.Medium,
+    // Value
+    value: String, // @StringRes valueId: Int
+    valueTextStyle: TextStyle = FontStyles.txt24,
+    valueTextAlign: TextAlign = TextAlign.Center,
+    // Icon
+    @DrawableRes iconId: Int? = null
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = stringResource(id = titleId),
+            style = titleTextStyle,
+            fontWeight = titleFontWeight
+        )
+        Spacer(modifier = Modifier.width(Dimens.space_prefix_text_to_textfield))
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(SilverGray)
+                .padding(vertical = Dimens.padding_vertical_gray_bg_value)
+                .weight(1f),
+            text = value, // stringResource(id = valueId),
+            style = valueTextStyle,
+            textAlign = valueTextAlign
+        )
+        iconId?.let {
+            Spacer(modifier = Modifier.width(Dimens.space_textfield_to_icon))
+            Image(
+                modifier = Modifier.size(40.dp),
+                painter = painterResource(id = it),
+                contentDescription = "Icon"
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true, locale = "th")
 @Composable
 fun BaseComposableComponentPreview() {
-    PrefixTitleAndBaseTextField(
-        titleId = R.string.login_user_id_title,
-        tfValue = TextFieldValue(),
-        onTfValueChanged = {}
+    PrefixTitleAndGrayBgValueTextWithIcon(
+        value = stringResource(id = R.string.common_ok_text),
+        iconId = R.drawable.ic_dialog_green_tick
+//        iconId = null
     )
+//    PrefixTitleAndBaseTextField(
+//        titleId = R.string.login_user_id_title,
+//        tfValue = TextFieldValue(),
+//        onTfValueChanged = {}
+//    )
 }
