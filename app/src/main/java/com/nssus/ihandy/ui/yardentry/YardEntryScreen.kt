@@ -23,6 +23,7 @@ import com.nssus.ihandy.R
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.YardEntryAction
+import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
 import com.nssus.ihandy.ui.basecomposable.BaseDropdownDialog
 import com.nssus.ihandy.ui.basecomposable.BaseHeader
 import com.nssus.ihandy.ui.basecomposable.RowPairButton
@@ -38,18 +39,18 @@ import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRC
 
 @Composable
 fun YardEntryScreen(
-//    uiYardEntrySt: YardEntryUIStateModel,
-    dataLs: List<DropdownUIModel>,
-    @DrawableRes resultIconId: Int?,
-    isCoilNoTfError: Boolean,
-    coilNo: String,
-    yyrrcct: String,
-    supplierNo: String,
+    uiYardEntrySt: YardEntryUIStateModel,
+//    dataLs: List<DropdownUIModel>,
+//    @DrawableRes resultIconId: Int?,
+//    isCoilNoTfError: Boolean,
+//    coilNo: String,
+//    yyrrcct: String,
+//    supplierNo: String,
     onAction: (YardEntryAction) -> Unit
 ) {
 //    var isCoilNoTfError by remember { mutableStateOf(false) }
 
-    var coilNoTxt by remember { mutableStateOf(TextFieldValue(coilNo)) }
+    var coilNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.coilNo)) }
 //    var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(yyrrcct)) }
 //    var supplierNoTxt by remember { mutableStateOf(TextFieldValue(supplierNo)) }
 
@@ -65,14 +66,14 @@ fun YardEntryScreen(
                 item {
                     Spacer(modifier = Modifier.height(Dimens.space_top_content_card_to_header))
                     BaseDropdownDialog(
-                        dataList = dataLs,
+                        dataList = uiYardEntrySt.dataLs,
                         onDropdownItemSelected = { onAction(YardEntryAction.SelectDataDropdown(it)) },
-                        selectedItem = dataLs.getSelectedItem() // dataLs.find { it.isSelected }
+                        selectedItem = uiYardEntrySt.dataLs.getSelectedItem() // dataLs.find { it.isSelected }
                     )
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     PrefixTitleAndGrayBgValueTextWithIcon(
                         value = stringResource(id = R.string.common_ok_text),
-                        iconId = resultIconId
+                        iconId = uiYardEntrySt.resultIconId
                     )
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     Row {
@@ -81,7 +82,7 @@ fun YardEntryScreen(
                             titleId = R.string.yard_entry_coil_no_title,
                             tfValue = coilNoTxt, // TextFieldValue(coilNo, TextRange(coilNo.length)), // coilNoTxt
                             tfMaxLength = MAX_LENGTH_COIL_NO, //
-                            tfIsError = isCoilNoTfError, //
+                            tfIsError = uiYardEntrySt.isCoilNoTfError, //
 //                            tfErrorMessage = "WARNING", // stringResource(R.string.yard_entry_coil_no_title)
                             onTfValueChanged = {
                                 coilNoTxt = it //
@@ -93,7 +94,7 @@ fun YardEntryScreen(
                         TopTitleAndBaseTextField(
                             modifier = Modifier.weight(.47f),
                             titleId = R.string.yard_entry_yyrrcct_title,
-                            tfValue = TextFieldValue(yyrrcct, TextRange(yyrrcct.length)), // yyrrcctTxt
+                            tfValue = TextFieldValue(uiYardEntrySt.yyrrcct, TextRange(uiYardEntrySt.yyrrcct.length)), // yyrrcctTxt
                             tfMaxLength = MAX_LENGTH_YYRRCCT, //
                             onTfValueChanged = {
 //                                yyrrcctTxt = it
@@ -105,7 +106,7 @@ fun YardEntryScreen(
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     TopTitleAndBaseTextField(
                         titleId = R.string.yard_entry_supplier_no_title,
-                        tfValue = TextFieldValue(supplierNo, TextRange(supplierNo.length)), // supplierNoTxt
+                        tfValue = TextFieldValue(uiYardEntrySt.supplierNo, TextRange(uiYardEntrySt.supplierNo.length)), // supplierNoTxt
                         tfMaxLength = MAX_LENGTH_SUPPLIER_NO, //
                         onTfValueChanged = {
 //                            supplierNoTxt = it
@@ -120,7 +121,7 @@ fun YardEntryScreen(
                         ),
                         titleId = R.string.yard_entry_display_yyrrcct_title,
                         titleTextStyle = FontStyles.txt28,
-                        value = "$coilNo $yyrrcct $supplierNo", //
+                        value = "${uiYardEntrySt.coilNo} ${uiYardEntrySt.yyrrcct} ${uiYardEntrySt.supplierNo}", //
                     )
                 }
             }
@@ -143,22 +144,22 @@ fun YardEntryScreen(
 @Composable
 fun YardEntryScreenPreview() {
     YardEntryScreen(
-//        uiYardEntrySt = YardEntryUIStateModel(
-//            dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
-//            isCoilNoTfError = false,
-////        resultIconId = null,
-//            resultIconId = R.drawable.ic_dialog_green_tick,
-//            coilNo = "",
-//            yyrrcct = "",
-//            supplierNo = "",
-//        ),
-        dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
-        isCoilNoTfError = false,
+        uiYardEntrySt = YardEntryUIStateModel(
+            dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
+            isCoilNoTfError = false,
 //        resultIconId = null,
-        resultIconId = R.drawable.ic_dialog_green_tick,
-        coilNo = "",
-        yyrrcct = "",
-        supplierNo = "",
+            resultIconId = R.drawable.ic_dialog_green_tick,
+            coilNo = "",
+            yyrrcct = "",
+            supplierNo = "",
+        ),
+//        dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
+//        isCoilNoTfError = false,
+////        resultIconId = null,
+//        resultIconId = R.drawable.ic_dialog_green_tick,
+//        coilNo = "",
+//        yyrrcct = "",
+//        supplierNo = "",
         onAction = {}
     )
 }
