@@ -1,5 +1,6 @@
 package com.nssus.ihandy.ui.yardentry
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +29,7 @@ import com.nssus.ihandy.ui.basecomposable.RowPairButton
 import com.nssus.ihandy.ui.basecomposable.TitleAndGrayBgValueText
 import com.nssus.ihandy.ui.basecomposable.TopTitleAndBaseTextField
 import com.nssus.ihandy.ui.basecomposable.BaseContentCardWithBackButton
+import com.nssus.ihandy.ui.basecomposable.PrefixTitleAndGrayBgValueTextWithIcon
 import com.nssus.ihandy.ui.theme.Dimens
 import com.nssus.ihandy.ui.theme.FontStyles
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
@@ -35,7 +38,9 @@ import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRC
 
 @Composable
 fun YardEntryScreen(
+//    uiYardEntrySt: YardEntryUIStateModel,
     dataLs: List<DropdownUIModel>,
+    @DrawableRes resultIconId: Int?,
     isCoilNoTfError: Boolean,
     coilNo: String,
     yyrrcct: String,
@@ -64,6 +69,12 @@ fun YardEntryScreen(
                         onDropdownItemSelected = { onAction(YardEntryAction.SelectDataDropdown(it)) },
                         selectedItem = dataLs.getSelectedItem() // dataLs.find { it.isSelected }
                     )
+                    Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
+                    PrefixTitleAndGrayBgValueTextWithIcon(
+                        value = stringResource(id = R.string.common_ok_text),
+                        iconId = resultIconId
+                    )
+                    Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     Row {
                         TopTitleAndBaseTextField(
                             modifier = Modifier.weight(.53f),
@@ -132,8 +143,19 @@ fun YardEntryScreen(
 @Composable
 fun YardEntryScreenPreview() {
     YardEntryScreen(
+//        uiYardEntrySt = YardEntryUIStateModel(
+//            dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
+//            isCoilNoTfError = false,
+////        resultIconId = null,
+//            resultIconId = R.drawable.ic_dialog_green_tick,
+//            coilNo = "",
+//            yyrrcct = "",
+//            supplierNo = "",
+//        ),
         dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
         isCoilNoTfError = false,
+//        resultIconId = null,
+        resultIconId = R.drawable.ic_dialog_green_tick,
         coilNo = "",
         yyrrcct = "",
         supplierNo = "",
