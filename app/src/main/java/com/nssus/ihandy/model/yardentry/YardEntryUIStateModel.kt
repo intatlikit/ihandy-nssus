@@ -1,8 +1,10 @@
 package com.nssus.ihandy.model.yardentry
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.nssus.ihandy.R
 import com.nssus.ihandy.model.ui.DropdownUIModel
+import com.nssus.ihandy.ui.yardentry.util.YardEntryUtil.getDataLs
 
 data class YardEntryUIStateModel(
     var isLoading: Boolean = false,
@@ -12,8 +14,9 @@ data class YardEntryUIStateModel(
     var isError: Boolean = false,
     var errorBody: YardEntryErrorModel? = null,
     //
-    var dataLs: List<DropdownUIModel> = emptyList(),
+    var dataLs: List<DropdownUIModel> = getDataLs(),
     var isCoilNoTfError: Boolean = false, //
+    @DrawableRes var resultIconId: Int? = null,
     var coilNo: String = "", //
     var yyrrcct: String = "", //
     var supplierNo: String = "" //
