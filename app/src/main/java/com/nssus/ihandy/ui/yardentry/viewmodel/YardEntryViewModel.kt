@@ -3,8 +3,11 @@ package com.nssus.ihandy.ui.yardentry.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.nssus.ihandy.R
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
+import com.nssus.ihandy.data.extension.isEqualMaxLength
+import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
 import com.nssus.ihandy.data.extension.setSelectItemFrom
 import com.nssus.ihandy.model.ui.DropdownUIModel
@@ -39,8 +42,13 @@ class YardEntryViewModel(
 //                onYardEntryUIStateLoading()
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                     coilNo = viewAction.text,
-                    isCoilNoTfError = viewAction.text.isErrorTextFieldWith(MAX_LENGTH_COIL_NO)
-                // viewAction.text.isNotEmpty() && MAX_LENGTH_COIL_NO !=  viewAction.text.length
+                    isCoilNoTfError = viewAction.text.isErrorTextFieldWith(MAX_LENGTH_COIL_NO),
+                    resultIconId = when {
+//                        isEqualMaxLength(viewAction.text, MAX_LENGTH_COIL_NO) -> null
+                        viewAction.text.isErrorTextFieldWith(MAX_LENGTH_COIL_NO) -> R.drawable.ic_dialog_red_cross
+                        viewAction.text.isEqualsMaxLength(MAX_LENGTH_COIL_NO)-> R.drawable.ic_dialog_green_tick
+                        else -> null
+                    }
                 )
             }
             is YardEntryAction.TypingYYRRCCTTextField -> { //
@@ -62,7 +70,7 @@ class YardEntryViewModel(
                 println("DROPP display: ${value.dataLs.getSelectedItem()?.display}") //
                 println("DROPP value: ${value.dataLs.getSelectedItemValue()}") //
             }
-            is YardEntryAction.ClickClearButton -> { // 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
+            is YardEntryAction.ClickClearButton -> {
 //                onYardEntryUIStateLoading()
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
 //                    navigateType = YardEntryNavigateType.GO_BACK
@@ -70,6 +78,7 @@ class YardEntryViewModel(
                 ).copy(
                     dataLs = getDataLs(),
                     isCoilNoTfError = false,
+                    resultIconId = null,
                     coilNo = "",
                     yyrrcct = "",
                     supplierNo = ""
