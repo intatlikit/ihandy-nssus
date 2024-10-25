@@ -36,13 +36,7 @@ fun YardEntryRoute(
     }
 
     YardEntryScreen(
-        uiYardEntrySt = uiYardEntrySt, //
-//        dataLs = uiYardEntrySt.dataLs,
-//        isCoilNoTfError = uiYardEntrySt.isCoilNoTfError, //
-//        resultIconId = uiYardEntrySt.resultIconId, //
-//        coilNo = uiYardEntrySt.coilNo, //
-//        yyrrcct = uiYardEntrySt.yyrrcct, //
-//        supplierNo = uiYardEntrySt.supplierNo, //
+        uiYardEntrySt = uiYardEntrySt,
         onAction = yardEntryVm::action
     )
 }

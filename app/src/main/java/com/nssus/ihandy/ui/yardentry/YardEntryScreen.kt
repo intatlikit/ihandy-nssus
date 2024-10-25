@@ -1,6 +1,5 @@
 package com.nssus.ihandy.ui.yardentry
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,19 +39,11 @@ import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRC
 @Composable
 fun YardEntryScreen(
     uiYardEntrySt: YardEntryUIStateModel,
-//    dataLs: List<DropdownUIModel>,
-//    @DrawableRes resultIconId: Int?,
-//    isCoilNoTfError: Boolean,
-//    coilNo: String,
-//    yyrrcct: String,
-//    supplierNo: String,
     onAction: (YardEntryAction) -> Unit
 ) {
-//    var isCoilNoTfError by remember { mutableStateOf(false) }
-
     var coilNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.coilNo)) }
-//    var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(yyrrcct)) }
-//    var supplierNoTxt by remember { mutableStateOf(TextFieldValue(supplierNo)) }
+    var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.yyrrcct)) }
+    var supplierNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.supplierNo)) }
 
     BaseContentCardWithBackButton(onBackIconClick = { onAction(YardEntryAction.GoBack) }) {
         Column(
@@ -68,7 +59,7 @@ fun YardEntryScreen(
                     BaseDropdownDialog(
                         dataList = uiYardEntrySt.dataLs,
                         onDropdownItemSelected = { onAction(YardEntryAction.SelectDataDropdown(it)) },
-                        selectedItem = uiYardEntrySt.dataLs.getSelectedItem() // dataLs.find { it.isSelected }
+                        selectedItem = uiYardEntrySt.dataLs.getSelectedItem()
                     )
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     PrefixTitleAndGrayBgValueTextWithIcon(
@@ -80,7 +71,7 @@ fun YardEntryScreen(
                         TopTitleAndBaseTextField(
                             modifier = Modifier.weight(.53f),
                             titleId = R.string.yard_entry_coil_no_title,
-                            tfValue = coilNoTxt, // TextFieldValue(coilNo, TextRange(coilNo.length)), // coilNoTxt
+                            tfValue = coilNoTxt, // TextFieldValue(coilNo, TextRange(coilNo.length)),
                             tfMaxLength = MAX_LENGTH_COIL_NO, //
                             tfIsError = uiYardEntrySt.isCoilNoTfError, //
 //                            tfErrorMessage = "WARNING", // stringResource(R.string.yard_entry_coil_no_title)
@@ -94,10 +85,10 @@ fun YardEntryScreen(
                         TopTitleAndBaseTextField(
                             modifier = Modifier.weight(.47f),
                             titleId = R.string.yard_entry_yyrrcct_title,
-                            tfValue = TextFieldValue(uiYardEntrySt.yyrrcct, TextRange(uiYardEntrySt.yyrrcct.length)), // yyrrcctTxt
-                            tfMaxLength = MAX_LENGTH_YYRRCCT, //
+                            tfValue = yyrrcctTxt,
+                            tfMaxLength = MAX_LENGTH_YYRRCCT,
                             onTfValueChanged = {
-//                                yyrrcctTxt = it
+                                yyrrcctTxt = it
                                 onAction(YardEntryAction.TypingYYRRCCTTextField(it.text))
                             }
                         )
@@ -106,10 +97,10 @@ fun YardEntryScreen(
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     TopTitleAndBaseTextField(
                         titleId = R.string.yard_entry_supplier_no_title,
-                        tfValue = TextFieldValue(uiYardEntrySt.supplierNo, TextRange(uiYardEntrySt.supplierNo.length)), // supplierNoTxt
-                        tfMaxLength = MAX_LENGTH_SUPPLIER_NO, //
+                        tfValue = supplierNoTxt,
+                        tfMaxLength = MAX_LENGTH_SUPPLIER_NO,
                         onTfValueChanged = {
-//                            supplierNoTxt = it
+                            supplierNoTxt = it
                             onAction(YardEntryAction.TypingSupplierNoTextField(it.text))
                         }
                     )
@@ -121,7 +112,7 @@ fun YardEntryScreen(
                         ),
                         titleId = R.string.yard_entry_display_yyrrcct_title,
                         titleTextStyle = FontStyles.txt28,
-                        value = "${uiYardEntrySt.coilNo} ${uiYardEntrySt.yyrrcct} ${uiYardEntrySt.supplierNo}", //
+                        value = "${uiYardEntrySt.coilNo} ${uiYardEntrySt.yyrrcct} ${uiYardEntrySt.supplierNo}",
                     )
                 }
             }
@@ -131,8 +122,8 @@ fun YardEntryScreen(
             onLeftButtonClick = { onAction(YardEntryAction.ClickSendButton) },
             onRightButtonClick = {
                 coilNoTxt = TextFieldValue()
-//                yyrrcctTxt = TextFieldValue()
-//                supplierNoTxt = TextFieldValue()
+                yyrrcctTxt = TextFieldValue()
+                supplierNoTxt = TextFieldValue()
 
                 onAction(YardEntryAction.ClickClearButton)
             }
@@ -153,13 +144,6 @@ fun YardEntryScreenPreview() {
             yyrrcct = "",
             supplierNo = "",
         ),
-//        dataLs = listOf(DropdownUIModel("", display = "Product Label", true)),
-//        isCoilNoTfError = false,
-////        resultIconId = null,
-//        resultIconId = R.drawable.ic_dialog_green_tick,
-//        coilNo = "",
-//        yyrrcct = "",
-//        supplierNo = "",
         onAction = {}
     )
 }
