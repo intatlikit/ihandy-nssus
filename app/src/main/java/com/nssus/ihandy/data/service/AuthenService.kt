@@ -2,7 +2,10 @@ package com.nssus.ihandy.data.service
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AuthenService {
 //    @POST("login")
@@ -16,4 +19,10 @@ interface AuthenService {
 
     //    @GET("user") // อาจไม่ต้องมี request
 //    suspend fun getUserInfo(@Body request: GetUserInfoRequest): Response<GetUserInfoResponse>
+
+//    @GET("v1.0/load-from-info/{caNo}")
+//    suspend fun loadEWhtFormInfo(
+//        @Path("caNo") caNumber: String,
+//        @Query("eventLog") eventLogId: String
+//    ): Response<GetLoadEWhtFormInfoResponse>
 }
