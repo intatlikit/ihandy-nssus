@@ -99,7 +99,7 @@ fun TopTitleAndBaseTextField(
     tfIsEnabled: Boolean = true,
     tfStyle: TextStyle = FontStyles.txt20,
     tfColor: TextFieldColor = TextFieldColor(),
-    tfBorder: Dp = Dimens.border_text_field,
+//    tfBorder: Dp = Dimens.border_text_field,
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true
@@ -125,7 +125,7 @@ fun TopTitleAndBaseTextField(
             enabled = tfIsEnabled,
             style = tfStyle,
             color = tfColor,
-            border = tfBorder,
+//            border = tfBorder,
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine
         )
@@ -152,7 +152,7 @@ fun PrefixTitleAndBaseTextField(
     tfIsEnabled: Boolean = true,
     tfStyle: TextStyle = FontStyles.txt20,
     tfColor: TextFieldColor = TextFieldColor(),
-    tfBorder: Dp = Dimens.border_text_field,
+//    tfBorder: Dp = Dimens.border_text_field,
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true
@@ -179,7 +179,7 @@ fun PrefixTitleAndBaseTextField(
             enabled = tfIsEnabled,
             style = tfStyle,
             color = tfColor,
-            border = tfBorder,
+//            border = tfBorder,
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine
         )

@@ -51,7 +51,7 @@ fun BaseTextField(
     enabled: Boolean = true,
     style: TextStyle = FontStyles.txt20,
     color: TextFieldColor = TextFieldColor(),
-    border: Dp = Dimens.border_text_field,
+//    border: Dp = Dimens.border_text_field,
     maxLine: Int = 1,
     singleLine: Boolean = true
 ) {
@@ -95,7 +95,7 @@ fun BaseTextField(
                         .clip(RoundedCornerShape(corner = CornerSize(Dimens.size_textfield_corner_small)))
                         .background(bgColor)
                         .border(
-                            border,
+                            if (isTextFieldError) 2.dp else Dimens.border_text_field, // convert to Dimens
                             borderColor,
                             RoundedCornerShape(corner = CornerSize(Dimens.size_textfield_corner_small))
                         )
