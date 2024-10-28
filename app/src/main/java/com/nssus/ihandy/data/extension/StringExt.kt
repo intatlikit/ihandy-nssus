@@ -18,3 +18,11 @@ fun isEqualMaxLength(text: String, tfMaxLength: Int): Boolean { //
 
 
 fun String.isNotEqualsMaxLength(tfMaxLength: Int): Boolean = isEqualsMaxLength(tfMaxLength).not() //  เหมือนกับ !isEqualsMaxLength()
+
+fun String.isValidFirstChar(start: Char = 'A', end: Char = 'F'): Boolean = first() in start..end
+
+fun String.isInvalidFirstChar(start: Char = 'A', end: Char = 'F'): Boolean = isValidFirstChar(start, end).not()
+
+fun String.isValidFirstCharWith(checkedChar: String): Boolean = first().toString() == checkedChar
+
+fun String.isInvalidFirstCharWith(checkedChar: String): Boolean = isValidFirstCharWith(checkedChar).not()
