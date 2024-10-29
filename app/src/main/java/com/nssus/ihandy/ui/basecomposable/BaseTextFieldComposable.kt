@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -53,7 +54,8 @@ fun BaseTextField(
     color: TextFieldColor = TextFieldColor(),
 //    border: Dp = Dimens.border_text_field,
     maxLine: Int = 1,
-    singleLine: Boolean = true
+    singleLine: Boolean = true,
+    onNextActionClick: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     val numberPattern = remember { Regex(PATTERN_NUMBER) }
@@ -62,9 +64,9 @@ fun BaseTextField(
     val borderColor = if (isTextFieldError) color.errorBorderColor else color.borderColor // color.borderColor
 
     val keyboardOptions = when (textFieldType) {
-        TextFieldType.Number -> KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
+        TextFieldType.Number -> KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Next)
         TextFieldType.Password -> KeyboardOptions(keyboardType = KeyboardType.Password)
-        else -> KeyboardOptions(keyboardType = KeyboardType.Text)
+        else -> KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next)
     }
 
     val visualTransformation = when(textFieldType) {
@@ -144,7 +146,13 @@ fun BaseTextField(
                 }
             }
         },
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() },),
+        keyboardActions = KeyboardActions(
+            onNext = {
+                println("onNext Click")
+                onNextActionClick()
+//                focusManager.clearFocus()
+            }
+        ),
         keyboardOptions = keyboardOptions
     )
 }

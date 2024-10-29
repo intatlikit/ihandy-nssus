@@ -9,11 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
@@ -36,14 +42,33 @@ import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_SUPPLIER_NO
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRCCT
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun YardEntryScreen(
     uiYardEntrySt: YardEntryUIStateModel,
     onAction: (YardEntryAction) -> Unit
 ) {
+    val firstFocusRequester = FocusRequester()
+    val secondFocusRequester = FocusRequester()
+    val thirdFocusRequester = FocusRequester()
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     var coilNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.coilNo)) }
     var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.yyrrcct)) }
     var supplierNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.supplierNo)) }
+
+    LaunchedEffect(uiYardEntrySt.isGetCoilRespSuccess, uiYardEntrySt.isGetYYRRCCTRespSuccess) {
+        if (uiYardEntrySt.isGetCoilRespSuccess) { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+            secondFocusRequester.requestFocus() // set focus next textfield
+            onAction(YardEntryAction.SetInitFlagGetCoilResp) // action to clear flag
+        }
+
+        if (uiYardEntrySt.isGetYYRRCCTRespSuccess) { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+            thirdFocusRequester.requestFocus() // set focus next textfield
+            onAction(YardEntryAction.SetInitFlagGetYYRRCCTResp) // action to clear flag
+        }
+    }
 
     BaseContentCardWithBackButton(onBackIconClick = { onAction(YardEntryAction.GoBack) }) {
         Column(
@@ -69,7 +94,9 @@ fun YardEntryScreen(
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     Row {
                         TopTitleAndBaseTextField(
-                            modifier = Modifier.weight(.53f),
+                            modifier = Modifier
+                                .weight(.53f)
+                                .focusRequester(firstFocusRequester),
                             titleId = R.string.yard_entry_coil_no_title,
                             tfValue = coilNoTxt, // TextFieldValue(coilNo, TextRange(coilNo.length)),
                             tfMaxLength = MAX_LENGTH_COIL_NO, //
@@ -79,29 +106,41 @@ fun YardEntryScreen(
                                 coilNoTxt = it //
 //                                isCoilNoTfError = it.text.isNotEmpty() && MAX_LENGTH_COIL_NO != it.text.length //
                                 onAction(YardEntryAction.TypingCoilNoTextField(it.text))
+                            },
+                            onTfNextActionClick = {
+                                onAction(YardEntryAction.ClickNextActionCoilTextField)
                             }
                         )
                         Spacer(modifier = Modifier.width(Dimens.space_textfield_to_textfield))
                         TopTitleAndBaseTextField(
-                            modifier = Modifier.weight(.47f),
+                            modifier = Modifier
+                                .weight(.47f)
+                                .focusRequester(secondFocusRequester),
                             titleId = R.string.yard_entry_yyrrcct_title,
                             tfValue = yyrrcctTxt,
                             tfMaxLength = MAX_LENGTH_YYRRCCT,
                             onTfValueChanged = {
                                 yyrrcctTxt = it
                                 onAction(YardEntryAction.TypingYYRRCCTTextField(it.text))
+                            },
+                            onTfNextActionClick = {
+                                onAction(YardEntryAction.ClickNextActionYYRRCCTTextField)
                             }
                         )
                     }
 
                     Spacer(modifier = Modifier.height(Dimens.space_textfield_to_textfield))
                     TopTitleAndBaseTextField(
+                        modifier = Modifier.focusRequester(thirdFocusRequester),
                         titleId = R.string.yard_entry_supplier_no_title,
                         tfValue = supplierNoTxt,
                         tfMaxLength = MAX_LENGTH_SUPPLIER_NO,
                         onTfValueChanged = {
                             supplierNoTxt = it
                             onAction(YardEntryAction.TypingSupplierNoTextField(it.text))
+                        },
+                        onTfNextActionClick = {
+                            keyboardController?.hide() // ถ้าไม่เซต จะไม่ซ่อนคีย์บอร์ด
                         }
                     )
 

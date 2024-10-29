@@ -102,7 +102,8 @@ fun TopTitleAndBaseTextField(
 //    tfBorder: Dp = Dimens.border_text_field,
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
-    tfIsSingleLine: Boolean = true
+    tfIsSingleLine: Boolean = true,
+    onTfNextActionClick: () -> Unit
 ) {
     Column(modifier = modifier) {
         Text(
@@ -127,7 +128,8 @@ fun TopTitleAndBaseTextField(
             color = tfColor,
 //            border = tfBorder,
             maxLine = tfMaxLine,
-            singleLine = tfIsSingleLine
+            singleLine = tfIsSingleLine,
+            onNextActionClick = { onTfNextActionClick() }
         )
     }
 }
@@ -155,7 +157,8 @@ fun PrefixTitleAndBaseTextField(
 //    tfBorder: Dp = Dimens.border_text_field,
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
-    tfIsSingleLine: Boolean = true
+    tfIsSingleLine: Boolean = true,
+    onTfNextActionClick: () -> Unit
 ) {
     Row(modifier = modifier) {
         Text(
@@ -181,7 +184,8 @@ fun PrefixTitleAndBaseTextField(
             color = tfColor,
 //            border = tfBorder,
             maxLine = tfMaxLine,
-            singleLine = tfIsSingleLine
+            singleLine = tfIsSingleLine,
+            onNextActionClick = { onTfNextActionClick() }
         )
     }
 }

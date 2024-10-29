@@ -16,6 +16,8 @@ data class YardEntryUIStateModel(
     //
     var dataLs: List<DropdownUIModel> = getDataLs(),
     var isCoilNoTfError: Boolean = false, //
+    var isGetCoilRespSuccess: Boolean = false,
+    var isGetYYRRCCTRespSuccess: Boolean = false,
     @DrawableRes var resultIconId: Int? = null,
     var coilNo: String = "", //
     var yyrrcct: String = "", //

@@ -10,4 +10,8 @@ sealed interface YardEntryAction {
     object ClickSendButton : YardEntryAction
     object ClickClearButton : YardEntryAction
     data class SelectDataDropdown(val selectedData: DropdownUIModel) : YardEntryAction
+    object ClickNextActionCoilTextField : YardEntryAction
+    object SetInitFlagGetCoilResp : YardEntryAction
+    object ClickNextActionYYRRCCTTextField : YardEntryAction
+    object SetInitFlagGetYYRRCCTResp : YardEntryAction
 }

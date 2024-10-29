@@ -3,13 +3,20 @@ package com.nssus.ihandy.ui.yardentry.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.nssus.ihandy.R
+import com.nssus.ihandy.data.constant.AppConstant
+import com.nssus.ihandy.data.constant.ValueConstant
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
 import com.nssus.ihandy.data.extension.isEqualMaxLength
 import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
 import com.nssus.ihandy.data.extension.setSelectItemFrom
+import com.nssus.ihandy.data.usecase.HomeUseCase
+import com.nssus.ihandy.model.login.LoginErrorType
+import com.nssus.ihandy.model.login.LoginNavigateType
+import com.nssus.ihandy.model.network.NetworkResult
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryErrorModel
@@ -17,9 +24,10 @@ import com.nssus.ihandy.model.yardentry.YardEntryErrorType
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
 import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
+import kotlinx.coroutines.launch
 
 class YardEntryViewModel(
-
+    private val homeUc: HomeUseCase
 ) : ViewModel() {
     private val _yardEntryUISt = mutableStateOf(YardEntryUIStateModel())
     val yardEntryUISt: State<YardEntryUIStateModel> = _yardEntryUISt
@@ -51,6 +59,18 @@ class YardEntryViewModel(
                         viewAction.text.isEqualsMaxLength(MAX_LENGTH_COIL_NO)-> R.drawable.ic_dialog_green_tick
                         else -> null
                     }
+                )
+            }
+            is YardEntryAction.ClickNextActionCoilTextField -> callCoilApi()
+            is YardEntryAction.SetInitFlagGetCoilResp -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    isGetCoilRespSuccess = false
+                )
+            }
+            is YardEntryAction.ClickNextActionYYRRCCTTextField -> callYYRRCCTApi()
+            is YardEntryAction.SetInitFlagGetYYRRCCTResp -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    isGetYYRRCCTRespSuccess = false
                 )
             }
             is YardEntryAction.TypingYYRRCCTTextField -> { //
@@ -87,6 +107,51 @@ class YardEntryViewModel(
 //                )
             }
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
+        }
+    }
+
+    private fun callCoilApi() {
+        // ตอนพิมพ์ core base text field ให้ออโต้อัปเปอเคส ตอนพิมพ์ตัวอิ้ง default true (except pwd tf = true)
+        viewModelScope.launch {
+            homeUc.getUserInfo().collect {
+                when (it) {
+                    is NetworkResult.Success -> {
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                            isGetCoilRespSuccess = true
+                        )
+                    }
+                    is NetworkResult.Loading -> onYardEntryUIStateLoading()
+                    is NetworkResult.Error -> {
+                        _yardEntryUISt.value = onYardEntryUIStateError(
+                            errorMsg = it.errorMessage
+                        ).copy(
+                            isGetCoilRespSuccess = false
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun callYYRRCCTApi() {
+        viewModelScope.launch {
+            homeUc.getUserInfo().collect {
+                when (it) {
+                    is NetworkResult.Success -> {
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                            isGetYYRRCCTRespSuccess = true
+                        )
+                    }
+                    is NetworkResult.Loading -> onYardEntryUIStateLoading()
+                    is NetworkResult.Error -> {
+                        _yardEntryUISt.value = onYardEntryUIStateError(
+                            errorMsg = it.errorMessage
+                        ).copy(
+                            isGetYYRRCCTRespSuccess = false
+                        )
+                    }
+                }
+            }
         }
     }
 
