@@ -15,9 +15,14 @@ fun isEqualMaxLength(text: String, tfMaxLength: Int): Boolean { //
 }
 
 
-
-
 fun String.isNotEqualsMaxLength(tfMaxLength: Int): Boolean = isEqualsMaxLength(tfMaxLength).not() //  เหมือนกับ !isEqualsMaxLength()
+
+
+
+
+// X1 == "G" & ( X2 == "A "| "B") /////**** isValidFirstChar && isValidFirstCharWith
+// string ext ตัวแรกเป็น G sepecific first char
+// string ext ตัวแรกเป็น A-F ตัวใหญ่อย่างเดียว มั้ย // A1234 regx
 
 fun String.isValidFirstChar(start: Char = 'A', end: Char = 'F'): Boolean = first() in start..end
 
