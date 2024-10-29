@@ -37,10 +37,8 @@ class YardEntryViewModel(
     fun action(viewAction: YardEntryAction) {
         when (viewAction) {
             is YardEntryAction.GoBack -> {
-                _yardEntryUISt.value = YardEntryUIStateModel() ///// เคลียค่า เพื่อกันเข้ามาหน้าแรกอีกรอบละที่กรอกยังอยุ
-                _yardEntryUISt.value = onYardEntryUIStateSuccess(
-                    navigateType = YardEntryNavigateType.GO_BACK
-                )
+                _yardEntryUISt.value = YardEntryUIStateModel(isClearAllTextFieldValue = true)
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(navigateType = YardEntryNavigateType.GO_BACK)
             }
             is YardEntryAction.TypingCoilNoTextField -> { //
 //                onYardEntryUIStateLoading()
@@ -92,9 +90,7 @@ class YardEntryViewModel(
                 )
             }
             is YardEntryAction.ClearAllValueButton -> {
-                _yardEntryUISt.value = YardEntryUIStateModel().copy( // clear and then .copy( set some values to update (optional))
-                    isClearAllTextFieldValue = true
-                )
+                _yardEntryUISt.value = YardEntryUIStateModel(isClearAllTextFieldValue = true) // clear and then .copy( set some values to update (optional))
             }
             is YardEntryAction.SetInitFlagClearAllTextField -> {
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
