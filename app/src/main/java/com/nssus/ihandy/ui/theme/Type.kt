@@ -3,21 +3,34 @@ package com.nssus.ihandy.ui.theme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.unit.sp
+import com.nssus.ihandy.R
 
-//val helvathaicaFonts = FontFamily(
-//    Font(R.font.db_helvathaica),
-//    Font(R.font.db_helvathaica_bd, FontWeight.Bold),
-//    Font(R.font.db_helvathaica_bd_it, FontWeight.Bold, FontStyle.Italic),
-//    Font(R.font.db_helvathaica_blk),
-//    Font(R.font.db_helvathaica_blk_it, style = FontStyle.Italic),
-//    Font(R.font.db_helvathaica_it, style = FontStyle.Italic),
-//    Font(R.font.db_helvathaica_med),
-//    Font(R.font.db_helvathaica_med_it, style = FontStyle.Italic),
-//)
+val poppinsFonts = FontFamily(
+    Font(R.font.poppins_thin, FontWeight.Thin),
+    Font(R.font.poppins_thin_italic, FontWeight.Thin, FontStyle.Italic),
+    Font(R.font.poppins_extra_light, FontWeight.ExtraLight),
+    Font(R.font.poppins_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.poppins_light, FontWeight.Light),
+    Font(R.font.poppins_light_italic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.poppins_regular),
+    Font(R.font.poppins_italic, style = FontStyle.Italic),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
+    Font(R.font.poppins_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+    Font(R.font.poppins_bold_italic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.poppins_extra_bold, FontWeight.ExtraBold),
+    Font(R.font.poppins_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.poppins_black, FontWeight.Black),
+    Font(R.font.poppins_black_italic, FontWeight.Black, FontStyle.Italic),
+)
 
 class CustomFontStyle(
     val txt14: TextStyle,
@@ -37,213 +50,128 @@ class CustomFontStyle(
     val txt44: TextStyle
 )
 
-val defaultTypography = Typography(
-    titleSmall = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 18.sp,
-    ),
-    titleMedium = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 24.sp,
-    ),
-    titleLarge = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 32.sp,
-    ),
-    bodySmall = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 16.sp,
-    ),
-    bodyMedium = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 18.sp,
-    ),
-    bodyLarge = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 20.sp,
-    )
-)
-
-val sw480Typography = Typography(
-    titleSmall = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 20.sp,
-    ),
-    titleMedium = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 26.sp,
-    ),
-    titleLarge = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 38.sp,
-    ),
-    bodySmall = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 18.sp,
-    ),
-    bodyMedium = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 20.sp,
-    ),
-    bodyLarge = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 22.sp,
-    )
-)
-
 val defaultFontStyle = CustomFontStyle(
     txt14 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 14.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt16 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 16.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt20 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 20.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt22 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 22.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt24 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 24.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt26 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 26.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt28 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 28.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt30 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 30.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt32 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 32.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt34 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 34.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt36 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 36.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt38 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 38.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt40 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 40.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt42 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 42.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     ),
     txt44 = TextStyle(
-//        fontFamily = helvathaicaFonts,
+        fontFamily = poppinsFonts,
         fontSize = 44.sp,
+        baselineShift = BaselineShift(-0.1f),
         color = Color.Black
     )
 )
 
 // ยังใช้ขนาดเดียวกับจอเล็ก
-val sw480FontStyle = CustomFontStyle(
-    txt14 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 14.sp,
-        color = Color.Black
+val sw480FontStyle = defaultFontStyle
+
+val defaultTypography = Typography(
+    titleSmall = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 18.sp
     ),
-    txt16 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 16.sp,
-        color = Color.Black
+    titleMedium = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 24.sp
     ),
-    txt20 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 20.sp,
-        color = Color.Black
+    titleLarge = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 32.sp
     ),
-    txt22 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 22.sp,
-        color = Color.Black
+    bodySmall = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 16.sp
     ),
-    txt24 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 24.sp,
-        color = Color.Black
+    bodyMedium = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 18.sp
     ),
-    txt26 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 26.sp,
-        color = Color.Black
-    ),
-    txt28 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 28.sp,
-        color = Color.Black
-    ),
-    txt30 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 30.sp,
-        color = Color.Black
-    ),
-    txt32 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 32.sp,
-        color = Color.Black
-    ),
-    txt34 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 34.sp,
-        color = Color.Black
-    ),
-    txt36 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 36.sp,
-        color = Color.Black
-    ),
-    txt38 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 38.sp,
-        color = Color.Black
-    ),
-    txt40 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 40.sp,
-        color = Color.Black
-    ),
-    txt42 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 42.sp,
-        color = Color.Black
-    ),
-    txt44 = TextStyle(
-//        fontFamily = helvathaicaFonts,
-        fontSize = 44.sp,
-        color = Color.Black
+    bodyLarge = TextStyle(
+        fontFamily = poppinsFonts,
+        fontSize = 20.sp
     )
 )
+
+// ยังใช้ขนาดเดียวกับจอเล็ก
+val sw480Typography = defaultTypography
