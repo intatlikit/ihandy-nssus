@@ -58,11 +58,11 @@ fun YardEntryScreen(
 
     LaunchedEffect(uiYardEntrySt.isGetCoilRespSuccess, uiYardEntrySt.isGetYYRRCCTRespSuccess, uiYardEntrySt.isClearAllTextFieldValue) {
         when {
-            uiYardEntrySt.isGetCoilRespSuccess -> { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+            uiYardEntrySt.isGetCoilRespSuccess -> {
                 secondFocusRequester.requestFocus() // set focus next textfield
                 onAction(YardEntryAction.SetInitFlagGetCoilResp) // action to clear flag
             }
-            uiYardEntrySt.isGetYYRRCCTRespSuccess -> { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+            uiYardEntrySt.isGetYYRRCCTRespSuccess -> {
                 thirdFocusRequester.requestFocus() // set focus next textfield
                 onAction(YardEntryAction.SetInitFlagGetYYRRCCTResp) // action to clear flag
             }
