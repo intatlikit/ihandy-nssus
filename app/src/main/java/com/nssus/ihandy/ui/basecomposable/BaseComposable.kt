@@ -84,7 +84,7 @@ fun TopTitleAndBaseTextField(
     modifier: Modifier = Modifier,
     // Title
     @StringRes titleId: Int,
-    titleStyle: TextStyle = FontStyles.txt28,
+    titleStyle: TextStyle = FontStyles.txt26,
     titleFontWeight: FontWeight = FontWeight.Medium,
     // TextField
     tfModifier: Modifier = Modifier.fillMaxWidth(),

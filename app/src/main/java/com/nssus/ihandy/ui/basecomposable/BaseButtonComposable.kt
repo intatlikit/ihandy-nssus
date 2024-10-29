@@ -69,7 +69,7 @@ fun BaseDialogButton(
         modifier = modifier,
         textButtonModifier = Modifier.padding(0.dp),
         text = text,
-        textStyle = FontStyles.txt16.copy(fontWeight = FontWeight.Medium),
+        textStyle = FontStyles.txt14.copy(fontWeight = FontWeight.Medium),
         borderColor = BaseGray,
         buttonColor = BaseGray,
         shape = RectangleShape,
