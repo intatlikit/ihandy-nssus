@@ -56,15 +56,23 @@ fun YardEntryScreen(
     var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.yyrrcct)) }
     var supplierNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.supplierNo)) }
 
-    LaunchedEffect(uiYardEntrySt.isGetCoilRespSuccess, uiYardEntrySt.isGetYYRRCCTRespSuccess) {
-        if (uiYardEntrySt.isGetCoilRespSuccess) { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
-            secondFocusRequester.requestFocus() // set focus next textfield
-            onAction(YardEntryAction.SetInitFlagGetCoilResp) // action to clear flag
-        }
+    LaunchedEffect(uiYardEntrySt.isGetCoilRespSuccess, uiYardEntrySt.isGetYYRRCCTRespSuccess, uiYardEntrySt.isClearAllTextFieldValue) {
+        when {
+            uiYardEntrySt.isGetCoilRespSuccess -> { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+                secondFocusRequester.requestFocus() // set focus next textfield
+                onAction(YardEntryAction.SetInitFlagGetCoilResp) // action to clear flag
+            }
+            uiYardEntrySt.isGetYYRRCCTRespSuccess -> { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
+                thirdFocusRequester.requestFocus() // set focus next textfield
+                onAction(YardEntryAction.SetInitFlagGetYYRRCCTResp) // action to clear flag
+            }
+            uiYardEntrySt.isClearAllTextFieldValue -> {
+                coilNoTxt = TextFieldValue()
+                yyrrcctTxt = TextFieldValue()
+                supplierNoTxt = TextFieldValue()
 
-        if (uiYardEntrySt.isGetYYRRCCTRespSuccess) { // case fail ยังโฟกัสพ้อยเตออยุ แต่คีบอดไม่ขึ้น
-            thirdFocusRequester.requestFocus() // set focus next textfield
-            onAction(YardEntryAction.SetInitFlagGetYYRRCCTResp) // action to clear flag
+                onAction(YardEntryAction.SetInitFlagClearAllTextField)
+            }
         }
     }
 
@@ -158,11 +166,11 @@ fun YardEntryScreen(
         RowPairButton(
             onLeftButtonClick = { onAction(YardEntryAction.ClickSendButton) },
             onRightButtonClick = {
-                coilNoTxt = TextFieldValue()
-                yyrrcctTxt = TextFieldValue()
-                supplierNoTxt = TextFieldValue()
+//                coilNoTxt = TextFieldValue()
+//                yyrrcctTxt = TextFieldValue()
+//                supplierNoTxt = TextFieldValue()
 
-                onAction(YardEntryAction.ClickClearButton)
+                onAction(YardEntryAction.ClearAllValueButton)
             }
         )
     }
