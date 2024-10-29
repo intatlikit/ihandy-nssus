@@ -12,10 +12,13 @@
     <!-- Common Button -->
     <string name="common_send_button">Send</string>
     <string name="common_clear_button">Clear</string>
+    <string name="common_continue_button">Continue</string>
+    <string name="common_cancel_button">Cancel</string>
 
     <!-- Common Dialog -->
     <string name="common_dialog_sent_completed_title">Sent Completed</string>
     <string name="common_dialog_sent_failed_title">Sent Failed</string>
+    <string name="common_dialog_warning_title">Warning</string>
 
     <!-- Login -->
     <string name="login_user_id_title">User ID</string>
