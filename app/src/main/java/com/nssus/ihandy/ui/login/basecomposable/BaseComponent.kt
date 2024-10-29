@@ -68,7 +68,8 @@ fun LoginTextField(
         tfMaxLength = tfMaxLength,
         onTfValueChanged = {
             onTfValueChanged(it)
-        }
+        },
+        onTfNextActionClick = {}
     )
 }
 
