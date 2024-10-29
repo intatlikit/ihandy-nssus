@@ -111,7 +111,6 @@ class YardEntryViewModel(
     }
 
     private fun callCoilApi() {
-        // ตอนพิมพ์ core base text field ให้ออโต้อัปเปอเคส ตอนพิมพ์ตัวอิ้ง default true (except pwd tf = true)
         viewModelScope.launch {
             homeUc.getUserInfo().collect {
                 when (it) {

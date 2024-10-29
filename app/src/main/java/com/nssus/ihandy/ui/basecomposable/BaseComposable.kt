@@ -103,6 +103,7 @@ fun TopTitleAndBaseTextField(
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true,
+    tfIsAutoGenUpperCase: Boolean = true,
     onTfNextActionClick: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -129,6 +130,7 @@ fun TopTitleAndBaseTextField(
 //            border = tfBorder,
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine,
+            isAutoGenUpperCase = tfIsAutoGenUpperCase,
             onNextActionClick = { onTfNextActionClick() }
         )
     }
@@ -158,6 +160,7 @@ fun PrefixTitleAndBaseTextField(
     tfMaxLine: Int = 1,
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true,
+    tfIsAutoGenUpperCase: Boolean = true,
     onTfNextActionClick: () -> Unit
 ) {
     Row(modifier = modifier) {
@@ -185,6 +188,7 @@ fun PrefixTitleAndBaseTextField(
 //            border = tfBorder,
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine,
+            isAutoGenUpperCase = tfIsAutoGenUpperCase,
             onNextActionClick = { onTfNextActionClick() }
         )
     }

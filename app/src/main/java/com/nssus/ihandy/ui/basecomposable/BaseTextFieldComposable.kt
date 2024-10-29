@@ -55,6 +55,7 @@ fun BaseTextField(
 //    border: Dp = Dimens.border_text_field,
     maxLine: Int = 1,
     singleLine: Boolean = true,
+    isAutoGenUpperCase: Boolean = true,
     onNextActionClick: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -80,7 +81,16 @@ fun BaseTextField(
         onValueChange = {
             when (textFieldType) {
                 TextFieldType.Number -> if (it.text.isEmpty() || it.text.matches(numberPattern)) onValueChanged(it)
-                else -> onValueChanged(it)
+                else -> {
+                    when (isAutoGenUpperCase) {
+                        true -> {
+                            val upperCasedText = it.text.uppercase()
+                            if (upperCasedText != value.text) onValueChanged(TextFieldValue(upperCasedText, it.selection))
+                            else onValueChanged(it)
+                        }
+                        false -> onValueChanged(it)
+                    }
+                }
             }
         },
         visualTransformation = visualTransformation,

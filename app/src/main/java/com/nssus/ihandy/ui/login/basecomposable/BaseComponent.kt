@@ -66,6 +66,7 @@ fun LoginTextField(
         tfType = tfType,
         tfValue = tfValue,
         tfMaxLength = tfMaxLength,
+        tfIsAutoGenUpperCase = false, //
         onTfValueChanged = {
             onTfValueChanged(it)
         },
