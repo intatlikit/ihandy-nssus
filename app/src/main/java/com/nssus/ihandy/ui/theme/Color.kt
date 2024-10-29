@@ -11,6 +11,7 @@ val White87 = Color(0xDEFFFFFF)
 val Red = Color(0xFFFF0000)
 
 val SilverGray = Color(0xFFD9D9D9)
+val BaseGray = Color(0xFFCACACA)
 val SoftPinkGray = Color(0xFFDCD3D3) //
 val MainGray = Color(0xFF9A9A9A)
 
