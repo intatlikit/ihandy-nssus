@@ -21,15 +21,13 @@ data class YardEntryUIStateModel(
     @DrawableRes var resultIconId: Int? = null,
     var coilNo: String = "", //
     var yyrrcct: String = "", //
-    var supplierNo: String = "" //
+    var supplierNo: String = "", //
+    var isClearAllTextFieldValue: Boolean = false
 )
 
 enum class YardEntryNavigateType {
-    GO_TO_MAIN,
     GO_BACK,
-//    DISPLAY_CONFIRM_DIALOG,
-//    DISPLAY_DOWNLOAD_SUCCESS_DIALOG,
-//    BACK_TO_SELECT_OR_SEARCH_COMP,
+    DISPLAY_BUTTON_DIALOG,
     NONE
 }
 
