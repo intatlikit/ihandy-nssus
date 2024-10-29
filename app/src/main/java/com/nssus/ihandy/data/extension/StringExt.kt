@@ -32,7 +32,7 @@ fun String.isValidFirstCharWith(checkedChar: String): Boolean = first().toString
 
 fun String.isInvalidFirstCharWith(checkedChar: String): Boolean = isValidFirstCharWith(checkedChar).not()
 
-fun String.replaceSpecificTextToEmpty(specificText: String = "-", newValue: String = ""): String {
+fun String.replaceSpecificTextToNewValue(specificText: String = "-", newValue: String = ""): String {
     if (isInvalidFirstCharWith(specificText)) return this
 
     return replaceFirst(oldValue = specificText, newValue = newValue)
