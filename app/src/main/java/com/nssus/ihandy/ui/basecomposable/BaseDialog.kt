@@ -180,7 +180,7 @@ fun BaseTitleMsgWithButtonDialog(
                     Row(
                         modifier = Modifier
                             .padding(top = 26.dp)
-                            .padding(horizontal = 26.dp)
+                            .padding(horizontal = 22.dp)
                     ) {
                         BaseDialogButton(
                             modifier = Modifier.weight(1f),
