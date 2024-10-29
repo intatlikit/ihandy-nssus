@@ -5,17 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nssus.ihandy.R
-import com.nssus.ihandy.data.constant.AppConstant
-import com.nssus.ihandy.data.constant.ValueConstant
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
-import com.nssus.ihandy.data.extension.isEqualMaxLength
 import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
 import com.nssus.ihandy.data.extension.setSelectItemFrom
 import com.nssus.ihandy.data.usecase.HomeUseCase
-import com.nssus.ihandy.model.login.LoginErrorType
-import com.nssus.ihandy.model.login.LoginNavigateType
 import com.nssus.ihandy.model.network.NetworkResult
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.YardEntryAction
@@ -37,7 +32,6 @@ class YardEntryViewModel(
 //            .copy(
 //            dataLs = getDataLs()
 //        )
-
     }
 
     fun action(viewAction: YardEntryAction) {
@@ -91,21 +85,24 @@ class YardEntryViewModel(
                 println("SSSS: ${value.coilNo} ${value.yyrrcct} ${value.supplierNo}")
                 println("DROPP display: ${value.dataLs.getSelectedItem()?.display}") //
                 println("DROPP value: ${value.dataLs.getSelectedItemValue()}") //
+
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                    navigateType = YardEntryNavigateType.DISPLAY_BUTTON_DIALOG,
+                    successMsg = "Coil No. AAAAAAAA not found" //
+                )
             }
-            is YardEntryAction.ClickClearButton -> {
-                _yardEntryUISt.value = YardEntryUIStateModel() // clear and then .copy( set some values to update (optional))
-//                _yardEntryUISt.value = onYardEntryUIStateSuccess(
-////                    navigateType = YardEntryNavigateType.GO_BACK
-////                    successMsg = "Something"
-//                ).copy(
-//                    dataLs = getDataLs(),
-//                    isCoilNoTfError = false,
-//                    resultIconId = null,
-//                    coilNo = "",
-//                    yyrrcct = "",
-//                    supplierNo = ""
-//                )
+            is YardEntryAction.ClearAllValueButton -> {
+                _yardEntryUISt.value = YardEntryUIStateModel().copy( // clear and then .copy( set some values to update (optional))
+                    isClearAllTextFieldValue = true
+                )
             }
+            is YardEntryAction.SetInitFlagClearAllTextField -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    isClearAllTextFieldValue = false
+                )
+            }
+            is YardEntryAction.ClickContinueDialogButton -> callCoilApi()
+            is YardEntryAction.InitNavigateData -> initNavigateData()
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
         }
     }
