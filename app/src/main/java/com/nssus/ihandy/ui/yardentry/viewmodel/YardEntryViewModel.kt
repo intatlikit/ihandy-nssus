@@ -112,9 +112,21 @@ class YardEntryViewModel(
             homeUc.getUserInfo().collect {
                 when (it) {
                     is NetworkResult.Success -> {
+                        // Mock Success Case
                         _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                             isGetCoilRespSuccess = true
                         )
+
+                        // Mock Fail Case
+//                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+//                            isGetCoilRespSuccess = false,
+//                            coilNo = "",
+//                            yyrrcct = "",
+//                            supplierNo = "",
+//                            isClearAllTextFieldValue = true
+//                        )
+
+//                        action(YardEntryAction.ClearAllValueButton)
                     }
                     is NetworkResult.Loading -> onYardEntryUIStateLoading()
                     is NetworkResult.Error -> {
