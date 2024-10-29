@@ -8,10 +8,13 @@ sealed interface YardEntryAction {
     data class TypingYYRRCCTTextField(val text: String) : YardEntryAction
     data class TypingSupplierNoTextField(val text: String) : YardEntryAction
     object ClickSendButton : YardEntryAction
-    object ClickClearButton : YardEntryAction
+    object ClearAllValueButton : YardEntryAction
     data class SelectDataDropdown(val selectedData: DropdownUIModel) : YardEntryAction
     object ClickNextActionCoilTextField : YardEntryAction
     object SetInitFlagGetCoilResp : YardEntryAction
     object ClickNextActionYYRRCCTTextField : YardEntryAction
     object SetInitFlagGetYYRRCCTResp : YardEntryAction
+    object ClickContinueDialogButton : YardEntryAction
+    object InitNavigateData : YardEntryAction
+    object SetInitFlagClearAllTextField : YardEntryAction
 }
