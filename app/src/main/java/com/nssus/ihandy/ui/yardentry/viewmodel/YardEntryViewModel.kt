@@ -167,7 +167,7 @@ class YardEntryViewModel(
         initNavigateData()
     }
 
-    fun initNavigateData() {
+    private fun initNavigateData() {
         _yardEntryUISt.value = onYardEntryUIStateSuccess()
     }
 
