@@ -63,16 +63,20 @@ fun BaseButton(
 fun BaseDialogButton(
     modifier: Modifier = Modifier,
     text: String,
+    borderColor: Color = BaseGray,
+    buttonColor: Color = BaseGray,
+    textColor: Color = Color.Black,
     onButtonClick: () -> Unit
 ) {
     BaseButton(
         modifier = modifier,
         textButtonModifier = Modifier.padding(0.dp),
         text = text,
-        textStyle = FontStyles.txt14.copy(fontWeight = FontWeight.Medium),
-        borderColor = BaseGray,
-        buttonColor = BaseGray,
-        shape = RectangleShape,
+        textStyle = FontStyles.txt14,
+        borderColor = borderColor,
+        buttonColor = buttonColor,
+        textColor = textColor,
+        shape = RoundedCornerShape(corner = CornerSize(5.dp)), //
         onButtonClick = { onButtonClick() }
     )
 }
