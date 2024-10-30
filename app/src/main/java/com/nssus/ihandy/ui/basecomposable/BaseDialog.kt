@@ -21,6 +21,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -32,9 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import com.nssus.ihandy.R
+import com.nssus.ihandy.ui.theme.BaseGray
 import com.nssus.ihandy.ui.theme.Black60
+import com.nssus.ihandy.ui.theme.DarkBlue
 import com.nssus.ihandy.ui.theme.Dimens
 import com.nssus.ihandy.ui.theme.FontStyles
+import com.nssus.ihandy.ui.theme.WarningRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -201,13 +205,143 @@ fun BaseTitleMsgWithButtonDialog(
 }
 
 @Composable
-fun CompleteDialog(onCloseDialog: () -> Unit) {
-    BaseMsgAndIconDialog(
-        icon = R.drawable.ic_dialog_green_tick,
-        titleId = R.string.common_dialog_sent_completed_title,
-        onCloseDialog = { onCloseDialog() }
+fun BaseMsgWithButtonDialog(
+    isHasPairButton: Boolean = false,
+    // Icon
+    @DrawableRes icon: Int = R.drawable.ic_dialog_warning,
+    // Description
+    message: String,
+    messageColor: Color = DarkBlue,
+    // Left Button
+    leftButtonTextId: Int = R.string.common_ok_button,
+    leftButtonTextColor: Color = Color.Black,
+    leftButtonColor: Color = BaseGray,
+    leftButtonBorderColor: Color = BaseGray,
+    // Right Button
+    rightButtonTextId: Int = R.string.common_cancel_button,
+    rightButtonTextColor: Color = Color.Black,
+    rightButtonColor: Color = BaseGray,
+    rightButtonBorderColor: Color = BaseGray,
+    // Action
+    onCloseDialog: () -> Unit = {}, //
+    onLeftButtonClick: () -> Unit,
+    onRightButtonClick: () -> Unit = {} //
+) {
+    BaseDialog(onTouchOutsideDialog = { onCloseDialog() }) {
+        LazyColumn {
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp) // outside-dialog's horizontal space
+                        .background(Color.White, RoundedCornerShape(36.dp))
+                        .padding(vertical = 20.dp, horizontal = 14.dp) // inner-dialog's space
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            modifier = Modifier.size(60.dp),
+                            painter = painterResource(id = icon),
+                            contentDescription = "Dialog Icon"
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(
+                            text = message,
+                            style = FontStyles.txt16.copy(color = messageColor),
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider(
+                        modifier = Modifier
+                            .height(1.dp)
+                            .fillMaxWidth(),
+                        color = Color.Black
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 20.dp)
+                            .padding(horizontal = if (isHasPairButton) 34.dp else 90.dp)
+                    ) {
+                        BaseDialogButton(
+                            modifier = Modifier.weight(1f),
+                            text = stringResource(id = leftButtonTextId),
+                            borderColor = leftButtonBorderColor,
+                            buttonColor = leftButtonColor,
+                            textColor = leftButtonTextColor,
+                            onButtonClick = { onLeftButtonClick() }
+                        )
+                        if (isHasPairButton) {
+                            Spacer(modifier = Modifier.width(Dimens.space_between_button_to_button))
+                            BaseDialogButton(
+                                modifier = Modifier.weight(1f),
+                                text = stringResource(id = rightButtonTextId),
+                                borderColor = rightButtonBorderColor,
+                                buttonColor = rightButtonColor,
+                                textColor = rightButtonTextColor,
+                                onButtonClick = { onRightButtonClick() }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ErrorDialog(
+    message: String,
+    onDialogButtonClick: () -> Unit
+) {
+    BaseMsgWithButtonDialog(
+        icon = R.drawable.ic_dialog_red_cross,
+        message = message,
+        messageColor = WarningRed,
+        leftButtonTextColor = Color.White,
+        leftButtonColor = WarningRed,
+        leftButtonBorderColor = WarningRed,
+        onLeftButtonClick = { onDialogButtonClick() }
     )
 }
+
+@Composable
+fun CompleteDialog(
+    message: String,
+    onDialogButtonClick: () -> Unit
+) {
+    BaseMsgWithButtonDialog(
+        icon = R.drawable.ic_dialog_green_tick,
+        message = message,
+        onLeftButtonClick = { onDialogButtonClick() }
+    )
+}
+
+@Composable
+fun WarningDialog(
+    message: String,
+    onLeftDialogButtonClick: () -> Unit,
+    onRightDialogButtonClick: () -> Unit
+) {
+    BaseMsgWithButtonDialog(
+        isHasPairButton = true,
+        message = message,
+        onLeftButtonClick = { onLeftDialogButtonClick() },
+        onRightButtonClick = { onRightDialogButtonClick() }
+    )
+}
+
+//@Composable
+//fun CompleteDialog(onCloseDialog: () -> Unit) {
+//    BaseMsgAndIconDialog(
+//        icon = R.drawable.ic_dialog_green_tick,
+//        titleId = R.string.common_dialog_sent_completed_title,
+//        onCloseDialog = { onCloseDialog() }
+//    )
+//}
 
 @Composable
 fun CompleteWithDescriptionDialog(
@@ -250,10 +384,33 @@ fun FailWithDescriptionDialog(
 @Preview(showBackground = true, locale = "th")
 @Composable
 fun BaseDialogPreview() {
-    BaseTitleMsgWithButtonDialog(
-        description = "Coil No. AAAAAAAA not found",
-        onCloseDialog = {}, onRightButtonClick = {}, onLeftButtonClick = {}
+    ErrorDialog(
+        message = "Message error no data found",
+        onDialogButtonClick = {}
     )
+//    CompleteDialog(
+//        message = "Relabel completed",
+//        onDialogButtonClick = {}
+//    )
+//    WarningDialog(
+//        message = "Do you want to relabel?",
+//        onLeftDialogButtonClick = {},
+//        onRightDialogButtonClick = {}
+//    )
+
+//    BaseMsgWithButtonDialog(
+//        isHasPairButton = false, // false true
+////        icon = R.drawable.ic_dialog_warning,  // ic_dialog_red_cross ic_dialog_green_tick
+//        message = "Message error no data found",
+////        messageColor = WarningRed, // DarkBlue
+//        onLeftButtonClick = {}
+//    )
+
+
+//    BaseTitleMsgWithButtonDialog(
+//        description = "Coil No. AAAAAAAA not found",
+//        onCloseDialog = {}, onRightButtonClick = {}, onLeftButtonClick = {}
+//    )
 //    CompleteDialog{}
 //    CompleteWithDescriptionDialog(description = "Coil No. AAAAAAAA"){}
 //    FailDialog{}
