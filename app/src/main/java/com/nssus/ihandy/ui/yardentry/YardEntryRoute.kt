@@ -8,6 +8,8 @@ import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
 import com.nssus.ihandy.ui.basecomposable.BaseTitleMsgWithButtonDialog
 import com.nssus.ihandy.ui.basecomposable.CustomLoading
+import com.nssus.ihandy.ui.basecomposable.ErrorDialog
+import com.nssus.ihandy.ui.basecomposable.WarningDialog
 import com.nssus.ihandy.ui.yardentry.viewmodel.YardEntryViewModel
 
 @Composable
@@ -31,12 +33,21 @@ fun YardEntryRoute(
                     yardEntryVm.action(YardEntryAction.InitNavigateData) //
                 }
                 YardEntryNavigateType.DISPLAY_BUTTON_DIALOG -> {
-                    BaseTitleMsgWithButtonDialog(
-                        description = uiYardEntrySt.successMsg,
-                        onCloseDialog = { yardEntryVm.action(YardEntryAction.InitNavigateData) },
-                        onLeftButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) },
-                        onRightButtonClick = { yardEntryVm.action(YardEntryAction.ClearAllValueButton) }
+//                    BaseTitleMsgWithButtonDialog(
+//                        description = uiYardEntrySt.successMsg,
+//                        onCloseDialog = { yardEntryVm.action(YardEntryAction.InitNavigateData) },
+//                        onLeftButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) },
+//                        onRightButtonClick = { yardEntryVm.action(YardEntryAction.ClearAllValueButton) }
+//                    )
+                    WarningDialog(
+                        message = uiYardEntrySt.successMsg ?: "-",
+                        onLeftDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) },
+                        onRightDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClearAllValueButton) }
                     )
+//                    ErrorDialog(
+//                        message = uiYardEntrySt.successMsg ?: "-",
+//                        onDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) }
+//                    )
                 }
                 else -> Unit
             }
