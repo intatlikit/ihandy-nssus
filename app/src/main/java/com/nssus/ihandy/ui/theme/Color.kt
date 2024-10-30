@@ -5,10 +5,12 @@ import androidx.compose.ui.graphics.Color
 val MainSky = Color(0xFFA8DDF4)
 val Sky28 = Color(0x4719A7CE)
 val ButtonSky = Color(0xFF19A7CE)
+val DarkBlue = Color(0xFF0660A0)
 
 val White87 = Color(0xDEFFFFFF)
 
 val Red = Color(0xFFFF0000)
+val WarningRed = Color(0xFFFF2732)
 
 val SilverGray = Color(0xFFD9D9D9)
 val BaseGray = Color(0xFFCACACA)
