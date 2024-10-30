@@ -54,91 +54,91 @@ val defaultFontStyle = CustomFontStyle(
     txt14 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 14.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt16 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 16.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt20 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 20.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt22 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 22.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt24 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 24.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt26 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 26.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt28 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 28.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt30 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 30.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt32 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 32.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt34 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 34.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt36 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 36.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt38 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 38.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt40 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 40.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt42 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 42.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     ),
     txt44 = TextStyle(
         fontFamily = poppinsFonts,
         fontSize = 44.sp,
-        baselineShift = BaselineShift(-0.1f),
+        baselineShift = BaselineShift(-0.2f),
         color = Color.Black
     )
 )
