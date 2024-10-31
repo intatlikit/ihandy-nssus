@@ -28,12 +28,12 @@ fun String.isValidFirstChar(start: Char = 'A', end: Char = 'F'): Boolean = first
 
 fun String.isInvalidFirstChar(start: Char = 'A', end: Char = 'F'): Boolean = isValidFirstChar(start, end).not()
 
-fun String.isValidFirstCharWith(checkedChar: String): Boolean = first().toString() == checkedChar
+//fun String.isValidFirstCharWith(checkedChar: String): Boolean = startsWith(checkedChar)
 
-fun String.isInvalidFirstCharWith(checkedChar: String): Boolean = isValidFirstCharWith(checkedChar).not()
+fun String.isNotStartWith(checkedChar: String): Boolean = startsWith(checkedChar).not()
 
-fun String.replaceSpecificTextToNewValue(specificText: String = "-", newValue: String = ""): String {
-    if (isInvalidFirstCharWith(specificText)) return this
+fun String.replaceStartSpecificTextToNewValue(specificText: String = "-", newValue: String = ""): String {
+    if (isNotStartWith(specificText)) return this
 
     return replaceFirst(oldValue = specificText, newValue = newValue)
 }
