@@ -4,6 +4,8 @@ import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_NO_INTERNET
 import com.nssus.ihandy.data.constant.LanguageConstant.BASE_NO_INTERNET
 import com.nssus.ihandy.data.constant.LanguageConstant.BASE_SOCKET_TIME_OUT
 import com.nssus.ihandy.data.constant.LanguageConstant.BASE_TOKEN_EXPIRED
+import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_200
+import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_204
 import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_ERROR
 import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_SOCKET_TIME_OUT
 import com.nssus.ihandy.data.constant.ValueConstant.STATUS_CODE_TOKEN_EXPIRED
@@ -21,7 +23,11 @@ internal suspend fun <T> baseNetworkFilter(call: suspend () -> Response<T>): Net
 
         return if (response.isSuccessful) {
             val responseBody = response.body()
-            NetworkResult.Success(data = responseBody, statusCode = statusCode.toString())
+            when (statusCode.toString()) {
+                STATUS_CODE_200 -> NetworkResult.Success200(data = responseBody, statusCode = statusCode.toString())
+                STATUS_CODE_204 -> NetworkResult.Success204(data = responseBody, statusCode = statusCode.toString())
+                else -> NetworkResult.Success(data = responseBody, statusCode = statusCode.toString())
+            }
         } else {
             NetworkResult.Error(errorMessage = response.message(), statusCode = statusCode.toString())
         }
