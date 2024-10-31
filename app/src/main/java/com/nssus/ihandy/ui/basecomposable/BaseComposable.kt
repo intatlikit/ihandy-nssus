@@ -104,6 +104,9 @@ fun TopTitleAndBaseTextField(
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true,
     tfIsAutoGenUpperCase: Boolean = true,
+    tfIsAutoReplacePrefix: Boolean = false,
+    tfCheckedPrefixText: String = "-",
+    tfNewPrefixText: String = "",
     onTfNextActionClick: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -131,6 +134,9 @@ fun TopTitleAndBaseTextField(
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine,
             isAutoGenUpperCase = tfIsAutoGenUpperCase,
+            isAutoReplacePrefix = tfIsAutoReplacePrefix,
+            checkedPrefixText = tfCheckedPrefixText,
+            newPrefixText = tfNewPrefixText,
             onNextActionClick = { onTfNextActionClick() }
         )
     }
@@ -161,6 +167,9 @@ fun PrefixTitleAndBaseTextField(
     tfMaxLength: Int = 250,
     tfIsSingleLine: Boolean = true,
     tfIsAutoGenUpperCase: Boolean = true,
+    tfIsAutoReplacePrefix: Boolean = false,
+    tfCheckedPrefixText: String = "-",
+    tfNewPrefixText: String = "",
     onTfNextActionClick: () -> Unit
 ) {
     Row(modifier = modifier) {
@@ -189,6 +198,9 @@ fun PrefixTitleAndBaseTextField(
             maxLine = tfMaxLine,
             singleLine = tfIsSingleLine,
             isAutoGenUpperCase = tfIsAutoGenUpperCase,
+            isAutoReplacePrefix = tfIsAutoReplacePrefix,
+            checkedPrefixText = tfCheckedPrefixText,
+            newPrefixText = tfNewPrefixText,
             onNextActionClick = { onTfNextActionClick() }
         )
     }
