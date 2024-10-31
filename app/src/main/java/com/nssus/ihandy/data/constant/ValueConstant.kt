@@ -21,6 +21,8 @@ object ValueConstant {
     // Network Response Status Code
     const val STATUS_CODE_SUCCESS = "S"
     const val STATUS_CODE_FAILED = "F"
+    const val STATUS_CODE_200 = "200"
+    const val STATUS_CODE_204 = "204"
     const val STATUS_CODE_TOKEN_EXPIRED = "STATUS_CODE_TOKEN_EXPIRED"
     const val STATUS_CODE_NO_INTERNET = "STATUS_CODE_NO_INTERNET"
     const val STATUS_CODE_SOCKET_TIME_OUT = "STATUS_CODE_SOCKET_TIME_OUT"
