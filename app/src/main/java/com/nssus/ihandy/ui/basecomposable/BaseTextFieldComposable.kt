@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.nssus.ihandy.data.constant.ValueConstant.PATTERN_NUMBER
+import com.nssus.ihandy.data.extension.replaceStartSpecificTextToNewValue
 import com.nssus.ihandy.model.ui.TextFieldAlign
 import com.nssus.ihandy.model.ui.TextFieldColor
 import com.nssus.ihandy.model.ui.TextFieldType
@@ -56,6 +57,9 @@ fun BaseTextField(
     maxLine: Int = 1,
     singleLine: Boolean = true,
     isAutoGenUpperCase: Boolean = true,
+    isAutoReplacePrefix: Boolean = false,
+    checkedPrefixText: String = "-",
+    newPrefixText: String = "",
     onNextActionClick: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
@@ -82,14 +86,19 @@ fun BaseTextField(
             when (textFieldType) {
                 TextFieldType.Number -> if (it.text.isEmpty() || it.text.matches(numberPattern)) onValueChanged(it)
                 else -> {
-                    when (isAutoGenUpperCase) {
-                        true -> {
-                            val upperCasedText = it.text.uppercase()
-                            if (upperCasedText != value.text) onValueChanged(TextFieldValue(upperCasedText, it.selection))
-                            else onValueChanged(it)
-                        }
-                        false -> onValueChanged(it)
-                    }
+                    var updatedText = it.text
+
+                    if (isAutoReplacePrefix) // If TRUE, replace from specific prefix text to new value
+                        updatedText = updatedText.replaceStartSpecificTextToNewValue(checkedPrefixText, newPrefixText)
+
+                    // If TRUE, convert text to uppercase
+                    if (isAutoGenUpperCase) updatedText = updatedText.uppercase()
+
+                    // Check if the new text is different to avoid unnecessary recomposition
+                    if (updatedText != value.text) {
+                        // Update text (with uppercase or/and remove hyphen from start if needed)
+                        onValueChanged(TextFieldValue(updatedText, it.selection))
+                    } else onValueChanged(it)
                 }
             }
         },
