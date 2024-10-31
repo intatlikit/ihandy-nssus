@@ -54,16 +54,19 @@ class LoginViewModel(
         viewModelScope.launch {
             homeUc.getUserInfo().collect {
                 when (it) {
-                    is NetworkResult.Success -> {
+//                    is NetworkResult.Success200, is NetworkResult.Success204 -> {
+                    is NetworkResult.Success200 -> {
+                        println("Status Code: 200")
+
                         USER_ROLE = if (username.isEmpty()) USER_ROLE_PACKING else USER_ROLE_SHIPPING // เกทจากค่าในเอพีไอ หรือจากซักที่ เพื่อเซต แต่ทำใน homeวิวโมเดล ไ่ม่ก้ของเมน
 
-                        it.data?.forEach {
-                            println("NAMEE: ${it.message}")
-                            println("AVATAR: ${it.result}")
-                            println("ID: ${it.id}")
-                            println("----------------------------------------")
-                        }
-                        println("TESTTT: $it")
+                        _loginUISt.value = onLoginUIStateSuccess(
+                            navigateType = LoginNavigateType.GO_TO_MAIN
+                        )
+                    }
+                    is NetworkResult.Success -> {
+                        println("Status Code: ${it.statusCode}")
+                        USER_ROLE = if (username.isEmpty()) USER_ROLE_PACKING else USER_ROLE_SHIPPING // เกทจากค่าในเอพีไอ หรือจากซักที่ เพื่อเซต แต่ทำใน homeวิวโมเดล ไ่ม่ก้ของเมน
 
                         _loginUISt.value = onLoginUIStateSuccess(
                             navigateType = LoginNavigateType.GO_TO_MAIN,
@@ -76,6 +79,7 @@ class LoginViewModel(
                             errorMsg = it.errorMessage // .getDisplay(getCurrentLanguage())
                         )
                     }
+                    else -> initNavigateData() // Status Code = 204
                 }
             }
         }

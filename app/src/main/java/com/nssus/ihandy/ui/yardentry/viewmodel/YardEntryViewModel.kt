@@ -107,7 +107,7 @@ class YardEntryViewModel(
         viewModelScope.launch {
             homeUc.getUserInfo().collect {
                 when (it) {
-                    is NetworkResult.Success -> {
+                    is NetworkResult.Success200 -> {
                         // Mock Success Case
                         _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                             isGetCoilRespSuccess = true
@@ -132,6 +132,7 @@ class YardEntryViewModel(
                             isGetCoilRespSuccess = false
                         )
                     }
+                    else -> initNavigateData() // Status Code = 204 or other
                 }
             }
         }
@@ -141,7 +142,7 @@ class YardEntryViewModel(
         viewModelScope.launch {
             homeUc.getUserInfo().collect {
                 when (it) {
-                    is NetworkResult.Success -> {
+                    is NetworkResult.Success200 -> {
                         _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                             isGetYYRRCCTRespSuccess = true
                         )
@@ -154,6 +155,7 @@ class YardEntryViewModel(
                             isGetYYRRCCTRespSuccess = false
                         )
                     }
+                    else -> initNavigateData() // Status Code = 204 or other
                 }
             }
         }
