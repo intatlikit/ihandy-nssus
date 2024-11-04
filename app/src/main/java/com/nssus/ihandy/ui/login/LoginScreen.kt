@@ -30,6 +30,7 @@ import com.nssus.ihandy.R
 import com.nssus.ihandy.data.constant.AppConstant.NETWORK_IP
 import com.nssus.ihandy.model.login.LoginAction
 import com.nssus.ihandy.model.ui.TextFieldType
+import com.nssus.ihandy.ui.basecomposable.DisplayWebViewButton
 import com.nssus.ihandy.ui.login.basecomposable.LoginAppIcon
 import com.nssus.ihandy.ui.login.basecomposable.LoginButton
 import com.nssus.ihandy.ui.login.basecomposable.LoginTextField
@@ -58,6 +59,9 @@ fun LoginScreen(
                 focusManager.clearFocus()
             }
     ) {
+//        DisplayWebViewButton(
+//            url = "https://www.google.co.th"
+//        )
         Column(
             modifier = Modifier
                 .fillMaxHeight()
@@ -134,7 +138,6 @@ fun LoginScreen(
                 )
             }
         }
-
         Text(
             modifier = Modifier
                 .fillMaxWidth()
