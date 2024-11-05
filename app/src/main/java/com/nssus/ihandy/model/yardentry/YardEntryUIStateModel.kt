@@ -18,16 +18,23 @@ data class YardEntryUIStateModel(
     var isCoilNoTfError: Boolean = false, //
     var isGetCoilRespSuccess: Boolean = false,
     var isGetYYRRCCTRespSuccess: Boolean = false,
+    var isGetSupplierNoRespSuccess: Boolean = false,
     @DrawableRes var resultIconId: Int? = null,
     var coilNo: String = "", //
     var yyrrcct: String = "", //
     var supplierNo: String = "", //
-    var isClearAllTextFieldValue: Boolean = false
+    var isClearAllTextFieldValue: Boolean = false,
+    // rename urself
+    var countdownTime: Long = 0L,
+    var isClickedCallCoilNo: Boolean = false,
+    var isClickedCallYYRRCCT: Boolean = false,
+    var isClickedCallSupplierNo: Boolean = false
 )
 
 enum class YardEntryNavigateType {
     GO_BACK,
     DISPLAY_BUTTON_DIALOG,
+    START_COUNTDOWN_TIMER,
     NONE
 }
 
