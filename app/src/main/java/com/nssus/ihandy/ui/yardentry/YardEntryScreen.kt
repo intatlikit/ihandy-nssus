@@ -56,7 +56,12 @@ fun YardEntryScreen(
     var yyrrcctTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.yyrrcct)) }
     var supplierNoTxt by remember { mutableStateOf(TextFieldValue(uiYardEntrySt.supplierNo)) }
 
-    LaunchedEffect(uiYardEntrySt.isGetCoilRespSuccess, uiYardEntrySt.isGetYYRRCCTRespSuccess, uiYardEntrySt.isClearAllTextFieldValue) {
+    LaunchedEffect(
+        uiYardEntrySt.isGetCoilRespSuccess,
+        uiYardEntrySt.isGetYYRRCCTRespSuccess,
+        uiYardEntrySt.isGetSupplierNoRespSuccess,
+        uiYardEntrySt.isClearAllTextFieldValue
+    ) {
         when {
             uiYardEntrySt.isGetCoilRespSuccess -> {
                 secondFocusRequester.requestFocus() // set focus next textfield
@@ -65,6 +70,9 @@ fun YardEntryScreen(
             uiYardEntrySt.isGetYYRRCCTRespSuccess -> {
                 thirdFocusRequester.requestFocus() // set focus next textfield
                 onAction(YardEntryAction.SetInitFlagGetYYRRCCTResp) // action to clear flag
+            }
+            uiYardEntrySt.isGetSupplierNoRespSuccess -> {
+                onAction(YardEntryAction.SetInitFlagGetSupplierNoResp) // action to clear flag
             }
             uiYardEntrySt.isClearAllTextFieldValue -> {
                 coilNoTxt = TextFieldValue()
@@ -146,7 +154,8 @@ fun YardEntryScreen(
                             onAction(YardEntryAction.TypingSupplierNoTextField(it.text))
                         },
                         onTfNextActionClick = {
-                            keyboardController?.hide() // ถ้าไม่เซต จะไม่ซ่อนคีย์บอร์ด
+                            onAction(YardEntryAction.ClickNextActionSupplierNoTextField)
+//                            keyboardController?.hide() // ถ้าไม่เซต จะไม่ซ่อนคีย์บอร์ด
                         }
                     )
 

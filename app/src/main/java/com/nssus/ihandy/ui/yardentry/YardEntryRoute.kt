@@ -11,6 +11,11 @@ import com.nssus.ihandy.ui.basecomposable.CustomLoading
 import com.nssus.ihandy.ui.basecomposable.ErrorDialog
 import com.nssus.ihandy.ui.basecomposable.WarningDialog
 import com.nssus.ihandy.ui.yardentry.viewmodel.YardEntryViewModel
+import android.os.CountDownTimer
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.nssus.ihandy.data.util.AppUtil.getCountDownTimer
 
 @Composable
 fun YardEntryRoute(
@@ -18,6 +23,8 @@ fun YardEntryRoute(
     yardEntryVm: YardEntryViewModel
 ) {
     val uiYardEntrySt by yardEntryVm.yardEntryUISt
+
+    var countDownTimer: CountDownTimer? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
         yardEntryVm.initData()
@@ -48,6 +55,24 @@ fun YardEntryRoute(
 //                        message = uiYardEntrySt.successMsg ?: "-",
 //                        onDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) }
 //                    )
+                }
+                YardEntryNavigateType.START_COUNTDOWN_TIMER -> {
+                    yardEntryVm.action(YardEntryAction.InitNavigateData) //
+
+                    countDownTimer?.cancel()
+
+                    countDownTimer = getCountDownTimer(
+                        countDownTimeInSec = uiYardEntrySt.countdownTime,
+                        onCountDownFinish = {
+                            println("Countdown Finished")
+                            countDownTimer?.cancel()
+
+                            yardEntryVm.action(YardEntryAction.CheckGetDataBeforeClearAllValue)
+//                            if (uiYardEntrySt.isClickedCallYYRRCCT.not() ||
+//                                (uiYardEntrySt.isClickedCallYYRRCCT && uiYardEntrySt.isClickedCallSupplierNo.not()))
+//                                yardEntryVm.action(YardEntryAction.ClearAllValueButton)
+                        }
+                    ).apply { start() }
                 }
                 else -> Unit
             }

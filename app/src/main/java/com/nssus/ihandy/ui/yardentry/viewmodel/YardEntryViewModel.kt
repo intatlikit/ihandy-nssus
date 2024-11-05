@@ -19,6 +19,8 @@ import com.nssus.ihandy.model.yardentry.YardEntryErrorType
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
 import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
+import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.TIME_TO_GET_COIL_NO
+import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.TIME_TO_GET_TRUCK_NO
 import kotlinx.coroutines.launch
 
 class YardEntryViewModel(
@@ -50,7 +52,8 @@ class YardEntryViewModel(
                         viewAction.text.isErrorTextFieldWith(MAX_LENGTH_COIL_NO) -> R.drawable.ic_dialog_red_cross
                         viewAction.text.isEqualsMaxLength(MAX_LENGTH_COIL_NO)-> R.drawable.ic_dialog_green_tick
                         else -> null
-                    }
+                    },
+                    isClickedCallCoilNo = false
                 )
             }
             is YardEntryAction.ClickNextActionCoilTextField -> callCoilApi()
@@ -65,16 +68,24 @@ class YardEntryViewModel(
                     isGetYYRRCCTRespSuccess = false
                 )
             }
+            is YardEntryAction.ClickNextActionSupplierNoTextField -> callSupplierNoApi()
+            is YardEntryAction.SetInitFlagGetSupplierNoResp -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    isGetSupplierNoRespSuccess = false
+                )
+            }
             is YardEntryAction.TypingYYRRCCTTextField -> { //
 //                onYardEntryUIStateLoading()
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
-                    yyrrcct = viewAction.text
+                    yyrrcct = viewAction.text,
+                    isClickedCallYYRRCCT = false
                 )
             }
             is YardEntryAction.TypingSupplierNoTextField -> { //
 //                onYardEntryUIStateLoading()
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
-                    supplierNo = viewAction.text
+                    supplierNo = viewAction.text,
+                    isClickedCallSupplierNo = false
                 )
             }
             is YardEntryAction.ClickSendButton -> {
@@ -83,6 +94,9 @@ class YardEntryViewModel(
                 println("SSSS: ${value.coilNo} ${value.yyrrcct} ${value.supplierNo}")
                 println("DROPP display: ${value.dataLs.getSelectedItem()?.display}") //
                 println("DROPP value: ${value.dataLs.getSelectedItemValue()}") //
+                println("isClickedCallCoilNo value: ${value.isClickedCallCoilNo}") //
+                println("isClickedCallYYRRCCT value: ${value.isClickedCallYYRRCCT}") //
+                println("isClickedCallSupplierNo value: ${value.isClickedCallSupplierNo}") //
 
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
                     navigateType = YardEntryNavigateType.DISPLAY_BUTTON_DIALOG,
@@ -97,6 +111,12 @@ class YardEntryViewModel(
                     isClearAllTextFieldValue = false
                 )
             }
+            is YardEntryAction.CheckGetDataBeforeClearAllValue -> {
+                val value = _yardEntryUISt.value
+                if (value.isClickedCallYYRRCCT.not() ||
+                    (value.isClickedCallYYRRCCT && value.isClickedCallSupplierNo.not()))
+                    action(YardEntryAction.ClearAllValueButton)
+            }
             is YardEntryAction.ClickContinueDialogButton -> callCoilApi()
             is YardEntryAction.InitNavigateData -> initNavigateData()
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
@@ -109,8 +129,14 @@ class YardEntryViewModel(
                 when (it) {
                     is NetworkResult.Success200 -> {
                         // Mock Success Case
-                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
-                            isGetCoilRespSuccess = true
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                            navigateType = YardEntryNavigateType.START_COUNTDOWN_TIMER
+                        ).copy(
+                            isGetCoilRespSuccess = true,
+                            countdownTime = TIME_TO_GET_TRUCK_NO,
+                            isClickedCallCoilNo = true,
+                            isClickedCallYYRRCCT = false,
+                            isClickedCallSupplierNo = false
                         )
 
                         // Mock Fail Case
@@ -139,12 +165,19 @@ class YardEntryViewModel(
     }
 
     private fun callYYRRCCTApi() {
+//        _yardEntryUISt.value.isClickedCallYYRRCCT = true
+
         viewModelScope.launch {
             homeUc.getUserInfo().collect {
                 when (it) {
                     is NetworkResult.Success200 -> {
-                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
-                            isGetYYRRCCTRespSuccess = true
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                            navigateType = YardEntryNavigateType.START_COUNTDOWN_TIMER
+                        ).copy(
+                            isGetYYRRCCTRespSuccess = true,
+                            countdownTime = TIME_TO_GET_COIL_NO,
+                            isClickedCallYYRRCCT = true, // จะเกิดเคส ยิงแฮนดี้หรือกดnext ก่อนหมดเวลา แต่เอพีไออาจตอบกลับมาแล้วเลยเวลาไปแล้ว ทำให้มันล้างค่า
+                            isClickedCallSupplierNo = false
                         )
                     }
                     is NetworkResult.Loading -> onYardEntryUIStateLoading()
@@ -153,6 +186,30 @@ class YardEntryViewModel(
                             errorMsg = it.errorMessage
                         ).copy(
                             isGetYYRRCCTRespSuccess = false
+                        )
+                    }
+                    else -> initNavigateData() // Status Code = 204 or other
+                }
+            }
+        }
+    }
+
+    private fun callSupplierNoApi() {
+        viewModelScope.launch {
+            homeUc.getUserInfo().collect {
+                when (it) {
+                    is NetworkResult.Success200 -> {
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                            isGetSupplierNoRespSuccess = true,
+                            isClickedCallSupplierNo = true // จะเกิดเคส ยิงแฮนดี้หรือกดnext ก่อนหมดเวลา แต่เอพีไออาจตอบกลับมาแล้วเลยเวลาไปแล้ว ทำให้มันล้างค่า
+                        )
+                    }
+                    is NetworkResult.Loading -> onYardEntryUIStateLoading()
+                    is NetworkResult.Error -> {
+                        _yardEntryUISt.value = onYardEntryUIStateError(
+                            errorMsg = it.errorMessage
+                        ).copy(
+                            isGetSupplierNoRespSuccess = false
                         )
                     }
                     else -> initNavigateData() // Status Code = 204 or other

@@ -14,7 +14,10 @@ sealed interface YardEntryAction {
     object SetInitFlagGetCoilResp : YardEntryAction
     object ClickNextActionYYRRCCTTextField : YardEntryAction
     object SetInitFlagGetYYRRCCTResp : YardEntryAction
+    object ClickNextActionSupplierNoTextField : YardEntryAction
+    object SetInitFlagGetSupplierNoResp : YardEntryAction
     object ClickContinueDialogButton : YardEntryAction
     object InitNavigateData : YardEntryAction
     object SetInitFlagClearAllTextField : YardEntryAction
+    object CheckGetDataBeforeClearAllValue : YardEntryAction
 }
