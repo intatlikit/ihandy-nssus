@@ -8,6 +8,9 @@
     <string name="common_result_title">Result</string>
     <string name="common_ok_text">OK</string>
     <string name="common_ng_text">NG</string>
+    <string name="common_coil_no_table_title">Coli No.</string>
+    <string name="common_status_table_title">Status</string>
+    <string name="common_dock_table_title">Dock</string>
 
     <!-- Common Button -->
     <string name="common_send_button">Send</string>
