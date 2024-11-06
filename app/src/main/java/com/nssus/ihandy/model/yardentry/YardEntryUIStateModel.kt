@@ -28,7 +28,50 @@ data class YardEntryUIStateModel(
     var countdownTime: Long = 0L,
     var isClickedCallCoilNo: Boolean = false,
     var isClickedCallYYRRCCT: Boolean = false,
-    var isClickedCallSupplierNo: Boolean = false
+    var isClickedCallSupplierNo: Boolean = false,
+    //
+    var coilNoLs: List<CoilDetailItem> = listOf(
+        CoilDetailItem(
+            coilNo = "AAAAAAAA12",
+            status = "",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA13",
+            status = "",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA14",
+            status = "",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA15",
+            status = "YES",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA16",
+            status = "YES",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA17",
+            status = "YES",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA18",
+            status = "YES",
+            dock = "16W"
+        ),
+        CoilDetailItem(
+            coilNo = "AAAAAAAA19",
+            status = "YES",
+            dock = "16W"
+        )
+    ) // emptyList()
 )
 
 enum class YardEntryNavigateType {
