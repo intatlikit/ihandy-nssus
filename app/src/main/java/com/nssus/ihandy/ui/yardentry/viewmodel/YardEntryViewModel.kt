@@ -98,10 +98,16 @@ class YardEntryViewModel(
                 println("isClickedCallYYRRCCT value: ${value.isClickedCallYYRRCCT}") //
                 println("isClickedCallSupplierNo value: ${value.isClickedCallSupplierNo}") //
 
-                _yardEntryUISt.value = onYardEntryUIStateSuccess(
-                    navigateType = YardEntryNavigateType.DISPLAY_BUTTON_DIALOG,
-                    successMsg = "Coil No. AAAAAAAA not found" //
-                )
+//                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+//                    navigateType = YardEntryNavigateType.DISPLAY_BUTTON_DIALOG,
+//                    successMsg = "Coil No. AAAAAAAA not found" //
+//                )
+
+                onYardEntryUIStateLoading()
+
+                _yardEntryUISt.value.coilNoLs.setSelectItemFrom(_yardEntryUISt.value.coilNo)
+
+                initNavigateData()
             }
             is YardEntryAction.ClearAllValueButton -> {
                 _yardEntryUISt.value = YardEntryUIStateModel(isClearAllTextFieldValue = true) // clear and then .copy( set some values to update (optional))
