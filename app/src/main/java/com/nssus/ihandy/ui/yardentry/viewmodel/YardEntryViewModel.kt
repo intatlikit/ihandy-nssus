@@ -9,6 +9,7 @@ import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
 import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
+import com.nssus.ihandy.data.extension.setMatchedItemFrom
 import com.nssus.ihandy.data.extension.setSelectItemFrom
 import com.nssus.ihandy.data.usecase.HomeUseCase
 import com.nssus.ihandy.model.network.NetworkResult
@@ -105,7 +106,7 @@ class YardEntryViewModel(
 
                 onYardEntryUIStateLoading()
 
-                _yardEntryUISt.value.coilNoLs.setSelectItemFrom(_yardEntryUISt.value.coilNo)
+                _yardEntryUISt.value.coilNoLs.setMatchedItemFrom(_yardEntryUISt.value.coilNo)
 
                 initNavigateData()
             }

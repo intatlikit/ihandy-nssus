@@ -2,16 +2,16 @@ package com.nssus.ihandy.data.extension
 
 import com.nssus.ihandy.model.yardentry.CoilDetailItem
 
-fun List<CoilDetailItem>.setSelectItemFrom(searchCoilNo: String) {
+fun List<CoilDetailItem>.setMatchedItemFrom(searchCoilNo: String) {
     apply {
-        getSelectedItem()?.let { it.isMatched = false }
+        getMatchedItem()?.let { it.isMatched = false }
         find { searchCoilNo == it.coilNo }?.let { it.isMatched = true }
     }
 }
 
-fun List<CoilDetailItem>.getSelectedItem(): CoilDetailItem? = find { it.isMatched }
+fun List<CoilDetailItem>.getMatchedItem(): CoilDetailItem? = find { it.isMatched }
 
-//fun List<CoilDetailItem>.getSelectedItemValue(): String? = getSelectedItem()?.coilNo // ถ้าเป็นเรสปอนเอพีไอ ค่อย dot เข้าไปอีกชั้นเพื่อเอาค่า coil เป็นต้น
+//fun List<CoilDetailItem>.getMatchedItemCoilNo(): String? = getSelectedItem()?.coilNo // ถ้าเป็นเรสปอนเอพีไอ ค่อย dot เข้าไปอีกชั้นเพื่อเอาค่า coil เป็นต้น
 
 fun CoilDetailItem?.isNull(): Boolean = this == null
 

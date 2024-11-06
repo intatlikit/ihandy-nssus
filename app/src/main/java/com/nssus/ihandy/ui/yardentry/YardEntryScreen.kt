@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nssus.ihandy.R
+import com.nssus.ihandy.data.extension.getMatchedItem
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.isNotNull
 import com.nssus.ihandy.data.extension.simpleVerticalScrollbar
@@ -81,7 +82,7 @@ fun YardEntryScreen(
 
     val listState = rememberLazyListState()
 
-    val focusedCoilNoItem = uiYardEntrySt.coilNoLs.getSelectedItem()
+    val focusedCoilNoItem = uiYardEntrySt.coilNoLs.getMatchedItem()
 
     LaunchedEffect(
         uiYardEntrySt.isGetCoilRespSuccess,
