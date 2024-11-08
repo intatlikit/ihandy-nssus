@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import com.nssus.ihandy.BuildConfig
 import com.nssus.ihandy.data.constant.AppConstant.APP_TOKEN
+import com.nssus.ihandy.data.constant.ValueConstant.PREFIX_TOKEN
 import com.nssus.ihandy.data.constant.ValueConstant.REQ_HEADER_AUTHORIZATION
 import com.nssus.ihandy.data.constant.ValueConstant.REQ_HEADER_KEY_CONTENT_TYPE
 import com.nssus.ihandy.data.constant.ValueConstant.REQ_HEADER_USER_AGENT
@@ -20,7 +21,7 @@ class RequestInterceptor() : Interceptor { // private val sharedPreferences: Sha
 //                sharedPreferences.getString(KEY_LANG, null) ?: LocaleUtils.getDefaultLanguage()
 //            addHeader(REQ_HEADER_LANGUAGE, lang.uppercase())
 
-            addHeader(REQ_HEADER_AUTHORIZATION, "Bearer ${APP_TOKEN}")
+            addHeader(REQ_HEADER_AUTHORIZATION, "$PREFIX_TOKEN$APP_TOKEN")
             addHeader(
                 REQ_HEADER_USER_AGENT,
                 "ihandy-android/version: ${BuildConfig.VERSION_NAME}; " +
