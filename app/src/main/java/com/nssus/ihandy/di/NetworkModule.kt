@@ -1,5 +1,6 @@
 package com.nssus.ihandy.di
 
+import com.nssus.ihandy.data.interceptor.AuthInterceptor
 import com.nssus.ihandy.data.interceptor.Chucker
 import com.nssus.ihandy.data.interceptor.NoConnectionInterceptor
 import com.nssus.ihandy.data.interceptor.RequestInterceptor
@@ -8,7 +9,6 @@ import com.nssus.ihandy.data.network.provideOkHttpClient
 import com.nssus.ihandy.data.network.provideRetrofit
 import com.nssus.ihandy.data.repository.UserRepository
 import com.nssus.ihandy.data.repository.UserRepositoryImpl
-import com.nssus.ihandy.data.usecase.AuthenUseCase
 import com.nssus.ihandy.data.usecase.HomeUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -19,11 +19,11 @@ val networkModule = module {
     single { NoConnectionInterceptor(get()) }
     single { RequestInterceptor() } // get()
     single { provideLoggingInterceptor() }
-//    single { AuthInterceptor(get(), get()) }
+    single { AuthInterceptor(get(), get(named("chucker")), get()) }
 
     // Network
     single { provideRetrofit(get(), get(), get()) }
-    single { provideOkHttpClient(get(), get(named("chucker")), get(), get()) } // get()
+    single { provideOkHttpClient(get(), get(named("chucker")), get(), get(), get()) }
 
     // Service & Repository
     single { provideUserService(get()) } // comment this if not use
