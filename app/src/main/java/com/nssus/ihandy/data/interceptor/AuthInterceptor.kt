@@ -38,7 +38,7 @@ class AuthInterceptor(
             runBlocking {
                 // Create Auth Service and call refreshToken Api to get new access token
                 val refreshTokenResponse = createAuthService().getUserInfo(
-//                    authPrefixToken = "$PREFIX_TOKEN$REFRESH_TOKEN" // make sure that already store REFRESH_TOKEN in login flow
+//                    authPrefixToken = "$PREFIX_TOKEN $REFRESH_TOKEN" // make sure that already store REFRESH_TOKEN in login flow
                 )
 
                 // Check refreshTokenResponse is successful
@@ -55,7 +55,7 @@ class AuthInterceptor(
 
                     // Set up the original request with the new token
                     val requestWithNewToken = originalRequest.newBuilder()
-                        .header(REQ_HEADER_AUTHORIZATION, "$PREFIX_TOKEN$APP_TOKEN")
+                        .header(REQ_HEADER_AUTHORIZATION, "$PREFIX_TOKEN $APP_TOKEN")
                         .build()
 
                     println("originalRequest: $originalRequest")
