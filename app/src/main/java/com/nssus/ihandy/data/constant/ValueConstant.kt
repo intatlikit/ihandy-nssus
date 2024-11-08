@@ -18,6 +18,8 @@ object ValueConstant {
     // Network Request Header Value
     const val REQ_HEADER_VALUE_CONTENT_TYPE = "application/json; charset=UTF-8"
 
+    const val PREFIX_TOKEN = "Bearer " // or Bearer (no end space)
+
     // Network Response Status Code
     const val STATUS_CODE_SUCCESS = "S"
     const val STATUS_CODE_FAILED = "F"
