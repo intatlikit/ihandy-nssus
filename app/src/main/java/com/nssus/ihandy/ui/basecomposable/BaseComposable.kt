@@ -244,7 +244,8 @@ fun TitleAndGrayBgValueText(
     // Value
     value: String,
     valueTextStyle: TextStyle = FontStyles.txt24,
-    valueTextAlign: TextAlign = TextAlign.Center
+    valueTextAlign: TextAlign = TextAlign.Center,
+    valueVerticalPadding: Dp = Dimens.padding_vertical_gray_bg_value
 ) {
     Column(modifier = modifier) {
         Text(
@@ -258,7 +259,7 @@ fun TitleAndGrayBgValueText(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(SilverGray)
-                .padding(vertical = Dimens.padding_vertical_gray_bg_value),
+                .padding(vertical = valueVerticalPadding), // Dimens.padding_vertical_gray_bg_value
             text = value,
             style = valueTextStyle,
             textAlign = valueTextAlign
