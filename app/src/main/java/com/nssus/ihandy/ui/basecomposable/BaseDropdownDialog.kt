@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.nssus.ihandy.R
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.ui.TextFieldColor
@@ -32,6 +35,7 @@ import com.nssus.ihandy.ui.theme.FontStyles
 import com.nssus.ihandy.ui.theme.MainGray
 import com.nssus.ihandy.ui.theme.MainSky
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseDropdownDialog(
     modifier: Modifier = Modifier,
@@ -40,9 +44,10 @@ fun BaseDropdownDialog(
     selectedItem: DropdownUIModel? = null,
     tfColor: TextFieldColor = TextFieldColor(),
     placeholder: String? = null,
-    style: TextStyle = FontStyles.txt22.copy(color = Color.Black)
+    style: TextStyle = FontStyles.txt22.copy(color = Color.Black),
+    isInitOpenDialog: Boolean = true
 ) {
-    var isOpenDialog by remember { mutableStateOf(false) }
+    var isOpenDialog by remember { mutableStateOf(isInitOpenDialog) }
 
     // TextField to Display Dialog
     BaseTextFieldWithTrailingIcon(
@@ -67,32 +72,37 @@ fun BaseDropdownDialog(
 
     // Dialog UI
     if (isOpenDialog) {
-        BaseDialog(onTouchOutsideDialog = { isOpenDialog = false }) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp) // outside-dialog's horizontal space
-                    .background(MainSky, RoundedCornerShape(Dimens.size_dropdown_dialog_corner))
-                    .padding(vertical = 20.dp) // inner-dialog's space
-            ) {
-                items(dataList) {
-                    Column(
-                        modifier = Modifier.clickable {
-                            onDropdownItemSelected(it)
-                            isOpenDialog = false
+        AlertDialog(
+            onDismissRequest = { isOpenDialog = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            BaseDialog(onTouchOutsideDialog = { isOpenDialog = false }) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 30.dp) // outside-dialog's horizontal space
+                        .background(MainSky, RoundedCornerShape(Dimens.size_dropdown_dialog_corner))
+                        .padding(vertical = 20.dp) // inner-dialog's space
+                ) {
+                    items(dataList) {
+                        Column(
+                            modifier = Modifier.clickable {
+                                onDropdownItemSelected(it)
+                                isOpenDialog = false
+                            }
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(vertical = 10.dp, horizontal = 24.dp),
+                                text = it.display,
+                                style = FontStyles.txt22.copy(color = style.color),
+                            )
+                            Divider(
+                                modifier = Modifier
+                                    .height(1.dp)
+                                    .fillMaxWidth(),
+                                color = MainGray
+                            )
                         }
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(vertical = 10.dp, horizontal = 24.dp),
-                            text = it.display,
-                            style = FontStyles.txt22.copy(color = style.color),
-                        )
-                        Divider(
-                            modifier = Modifier
-                                .height(1.dp)
-                                .fillMaxWidth(),
-                            color = MainGray
-                        )
                     }
                 }
             }
