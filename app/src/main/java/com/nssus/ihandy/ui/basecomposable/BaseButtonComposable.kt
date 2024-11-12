@@ -1,6 +1,7 @@
 package com.nssus.ihandy.ui.basecomposable
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,13 +27,15 @@ fun BaseButton(
     modifier: Modifier = Modifier,
     textButtonModifier: Modifier = Modifier.padding(6.dp),
     text: String,
-    textStyle: TextStyle = FontStyles.txt24.copy(fontWeight = FontWeight.SemiBold),
+    textStyle: TextStyle = FontStyles.txt20,
+    textFontWeight: FontWeight = FontWeight.SemiBold,
     textColor: Color = Color.Black,
     borderColor: Color = Black50,
     buttonColor: Color = Sky28,
     shape: Shape = RoundedCornerShape(corner = CornerSize(Dimens.size_button_corner_small)),
     enabled: Boolean = true,
     elevation: ButtonElevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 0.dp),
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     onButtonClick: () -> Unit
 ) {
     Button(
@@ -48,12 +50,14 @@ fun BaseButton(
         enabled = enabled,
         shape = shape,
         elevation = elevation,
+        contentPadding = contentPadding,
         onClick = { onButtonClick() }
     ) {
         Text(
             modifier = textButtonModifier,
             text = text,
             style = textStyle,
+            fontWeight = textFontWeight,
             color = textColor
         )
     }
