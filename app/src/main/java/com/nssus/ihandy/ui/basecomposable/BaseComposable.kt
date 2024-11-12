@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.window.Dialog
@@ -212,19 +214,25 @@ fun RowPairButton(
     @StringRes textRightButton: Int = R.string.common_clear_button,
     betweenSpace: Dp = Dimens.space_between_button_to_button,
     bottomSpace: Dp = Dimens.space_bottom_content_card_to_button,
+    leftButtonContentPadding: PaddingValues = ButtonDefaults.ContentPadding, // fix ur own default
+    rightButtonContentPadding: PaddingValues = ButtonDefaults.ContentPadding, // fix ur own default
+    leftButtonWeight: Float = .5f, // left weight + right weight = 1f (can set 2 decimal)
+    rightButtonWeight: Float = .5f, // left weight + right weight = 1f (can set 2 decimal)
     onLeftButtonClick: () -> Unit,
     onRightButtonClick: () -> Unit
 ) {
     Column {
         Row {
             BaseButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(leftButtonWeight),
+                contentPadding = leftButtonContentPadding,
                 text = stringResource(id = textLeftButton),
                 onButtonClick = { onLeftButtonClick() }
             )
             Spacer(modifier = Modifier.width(betweenSpace))
             BaseButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(rightButtonWeight),
+                contentPadding = rightButtonContentPadding,
                 text = stringResource(id = textRightButton),
                 onButtonClick = { onRightButtonClick() }
             )
