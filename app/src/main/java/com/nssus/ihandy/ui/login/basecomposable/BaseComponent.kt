@@ -84,6 +84,7 @@ fun LoginButton(onLoginButtonClick: () -> Unit) {
         text = stringResource(id = R.string.login_login_button),
         textColor = Color.White,
         textStyle = FontStyles.txt20,
+        textFontWeight = FontWeight.Normal,
         buttonColor = ButtonSky,
         borderColor = MainSky,
         shape = RoundedCornerShape(corner = CornerSize(Dimens.size_button_corner_medium)),

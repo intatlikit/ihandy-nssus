@@ -77,6 +77,7 @@ fun BaseDialogButton(
         textButtonModifier = Modifier.padding(0.dp),
         text = text,
         textStyle = FontStyles.txt14,
+        textFontWeight = FontWeight.Normal,
         borderColor = borderColor,
         buttonColor = buttonColor,
         textColor = textColor,
