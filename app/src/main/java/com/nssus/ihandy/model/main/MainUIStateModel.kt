@@ -13,7 +13,7 @@ data class MainUIStateModel(
 )
 
 enum class MainNavigateType {
-    GO_TO_HOME,
+    GO_TO_RESTART_APP,
     NONE
 }
 

@@ -21,7 +21,11 @@ class MainViewModel(
     }
 
     fun logout() {
+        // Call Logout Api Before
 
+        _mainUISt.value = onMainUIStateSuccess(
+            navigateType = MainNavigateType.GO_TO_RESTART_APP
+        )
     }
 
     fun initNavigateData() {
