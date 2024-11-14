@@ -1,12 +1,16 @@
 package com.nssus.ihandy.ui.yardentry
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -37,11 +42,14 @@ import com.nssus.ihandy.R
 import com.nssus.ihandy.data.extension.getMatchedItem
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.isNotNull
+import com.nssus.ihandy.data.extension.padStart
+import com.nssus.ihandy.data.extension.padStartCustom
 import com.nssus.ihandy.data.extension.simpleVerticalScrollbar
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.CoilDetailItem
 import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
+import com.nssus.ihandy.ui.basecomposable.BaseButton
 import com.nssus.ihandy.ui.basecomposable.BaseDropdownDialog
 import com.nssus.ihandy.ui.basecomposable.BaseHeader
 import com.nssus.ihandy.ui.basecomposable.RowPairButton
@@ -59,6 +67,7 @@ import com.nssus.ihandy.ui.theme.FontStyles
 import com.nssus.ihandy.ui.theme.SilverGray
 import com.nssus.ihandy.ui.theme.StatusRed
 import com.nssus.ihandy.ui.theme.White87
+import com.nssus.ihandy.ui.yardentry.basecomposable.BaseDropdownDialogWithButton
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_SUPPLIER_NO
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRCCT
@@ -159,20 +168,36 @@ fun YardEntryScreen(
                     }
                 )
             }
-            TopTitleAndBaseTextField(
-                modifier = Modifier.focusRequester(thirdFocusRequester),
-                titleId = R.string.yard_entry_supplier_no_title,
-                tfValue = supplierNoTxt,
-                tfMaxLength = MAX_LENGTH_SUPPLIER_NO,
-                onTfValueChanged = {
-                    supplierNoTxt = it
-                    onAction(YardEntryAction.TypingSupplierNoTextField(it.text))
-                },
-                onTfNextActionClick = {
-                    onAction(YardEntryAction.ClickNextActionSupplierNoTextField)
+
+            Row(verticalAlignment = Alignment.Bottom) {
+                TopTitleAndBaseTextField(
+                    modifier = Modifier
+                        .weight(.51f)
+                        .focusRequester(thirdFocusRequester),
+                    titleId = R.string.yard_entry_coil_no_title, // yard_entry_supplier_no_title
+                    tfValue = supplierNoTxt,
+                    tfMaxLength = MAX_LENGTH_SUPPLIER_NO,
+                    onTfValueChanged = {
+                        supplierNoTxt = it
+                        onAction(YardEntryAction.TypingSupplierNoTextField(it.text))
+                    },
+                    onTfNextActionClick = {
+                        onAction(YardEntryAction.ClickNextActionSupplierNoTextField)
 //                            keyboardController?.hide() // ถ้าไม่เซต จะไม่ซ่อนคีย์บอร์ด
-                }
-            )
+                    }
+                )
+                BaseButton(
+                    modifier = Modifier
+                        .offset(y = 3.dp)
+                        .padding(start = Dimens.space_textfield_to_textfield)
+                        .weight(.49f),
+                    textFontWeight = FontWeight.Normal,
+                    contentPadding = PaddingValues(0.dp),
+                    text = stringResource(id = R.string.yard_entry_coil_no_count, uiYardEntrySt.coilNoLs.count().padStart()), // padStartCustom
+                    onButtonClick = { onAction(YardEntryAction.ClickButtonToGoToCoilDetailLsScreen) }
+                )
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
             LazyColumn(
                 modifier = Modifier
@@ -195,7 +220,7 @@ fun YardEntryScreen(
 //                        isFirstColumnValueMatched = it.isMatched,
 //                        firstColumnValue = it.coilNo,
 //                        secondColumnValue = it.status,
-//                        thirdColumnValue = it.dock,
+//                        thirdColumnValue = it.dock
 //                    )
                 }
             }
@@ -203,6 +228,10 @@ fun YardEntryScreen(
 
         Spacer(modifier = Modifier.height(20.dp)) // make ur own
         RowPairButton(
+//            leftButtonWeight = .6f,
+//            rightButtonWeight = .4f,
+//            leftButtonContentPadding = PaddingValues(0.dp),
+//            rightButtonContentPadding = PaddingValues(0.dp),
             onLeftButtonClick = { onAction(YardEntryAction.ClickSendButton) },
             onRightButtonClick = { onAction(YardEntryAction.ClearAllValueButton) }
         )
