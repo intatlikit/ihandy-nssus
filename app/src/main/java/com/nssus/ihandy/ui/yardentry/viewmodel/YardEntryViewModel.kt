@@ -9,11 +9,14 @@ import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
 import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
+import com.nssus.ihandy.data.extension.isNull
 import com.nssus.ihandy.data.extension.setMatchedItemFrom
 import com.nssus.ihandy.data.extension.setSelectItemFrom
+import com.nssus.ihandy.data.extension.setSelectedRemoveFrom
 import com.nssus.ihandy.data.usecase.HomeUseCase
 import com.nssus.ihandy.model.network.NetworkResult
 import com.nssus.ihandy.model.ui.DropdownUIModel
+import com.nssus.ihandy.model.yardentry.CoilDetailItem
 import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryErrorModel
 import com.nssus.ihandy.model.yardentry.YardEntryErrorType
@@ -31,7 +34,9 @@ class YardEntryViewModel(
     val yardEntryUISt: State<YardEntryUIStateModel> = _yardEntryUISt
 
     fun initData() {
-        _yardEntryUISt.value = YardEntryUIStateModel() /////////
+        if (_yardEntryUISt.value.isAlreadyInitialFeature) return
+
+        _yardEntryUISt.value = YardEntryUIStateModel(isAlreadyInitialFeature = true) /////////
 //            .copy(
 //            dataLs = getDataLs()
 //        )
@@ -108,10 +113,13 @@ class YardEntryViewModel(
 
                 _yardEntryUISt.value.coilNoLs.setMatchedItemFrom(_yardEntryUISt.value.coilNo)
 
-                initNavigateData()
+                action(YardEntryAction.InitNavigateData)
             }
             is YardEntryAction.ClearAllValueButton -> {
-                _yardEntryUISt.value = YardEntryUIStateModel(isClearAllTextFieldValue = true) // clear and then .copy( set some values to update (optional))
+                _yardEntryUISt.value = YardEntryUIStateModel(
+                    isClearAllTextFieldValue = true,
+                    isAlreadyInitialFeature = true //
+                ) // clear with new state model object and set some value
             }
             is YardEntryAction.SetInitFlagClearAllTextField -> {
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
@@ -127,6 +135,29 @@ class YardEntryViewModel(
             is YardEntryAction.ClickContinueDialogButton -> callCoilApi()
             is YardEntryAction.InitNavigateData -> initNavigateData()
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
+            // Coil Detail List Screen
+            is YardEntryAction.ClickBackToMainYardEntryScreen -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                    navigateType = YardEntryNavigateType.BACK_TO_YARD_ENTRY_MAIN
+                )
+            }
+            is YardEntryAction.ClickButtonToGoToCoilDetailLsScreen -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                    navigateType = YardEntryNavigateType.GO_TO_COIL_DETAIL_LS
+                )
+            }
+            is YardEntryAction.SelectCoilDetailItem -> {
+                onYardEntryUIStateLoading()
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    coilNoLs = _yardEntryUISt.value.coilNoLs.setSelectedRemoveFrom(viewAction.selectedData)
+                )
+            }
+            is YardEntryAction.ClickConfirmRemoveSelectedCoilNoLs -> {
+                onYardEntryUIStateLoading()
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    coilNoLs = _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove.not() }
+                )
+            }
         }
     }
 
@@ -135,16 +166,32 @@ class YardEntryViewModel(
             homeUc.getUserInfo().collect {
                 when (it) {
                     is NetworkResult.Success200 -> {
-                        // Mock Success Case
-                        _yardEntryUISt.value = onYardEntryUIStateSuccess(
-                            navigateType = YardEntryNavigateType.START_COUNTDOWN_TIMER
-                        ).copy(
-                            isGetCoilRespSuccess = true,
-                            countdownTime = TIME_TO_GET_TRUCK_NO,
-                            isClickedCallCoilNo = true,
-                            isClickedCallYYRRCCT = false,
-                            isClickedCallSupplierNo = false
+                        // Mock Test to Add Coil Detail into CoilNoList
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                            coilNoLs = if (_yardEntryUISt.value.coilNoLs.find { it.coilNo == _yardEntryUISt.value.coilNo }.isNull()) {
+                                _yardEntryUISt.value.coilNoLs + listOf(
+                                    CoilDetailItem(
+                                        coilNo = _yardEntryUISt.value.coilNo, // from response
+                                        status = "YES", // from response
+                                        dock = "16W" // from response
+                                    )
+                                )
+                            } else _yardEntryUISt.value.coilNoLs
                         )
+
+                        _yardEntryUISt.value.coilNoLs.setMatchedItemFrom(_yardEntryUISt.value.coilNo)
+                        action(YardEntryAction.InitNavigateData)
+
+                        // Mock Success Case
+//                        _yardEntryUISt.value = onYardEntryUIStateSuccess(
+//                            navigateType = YardEntryNavigateType.START_COUNTDOWN_TIMER
+//                        ).copy(
+//                            isGetCoilRespSuccess = true,
+//                            countdownTime = TIME_TO_GET_TRUCK_NO,
+//                            isClickedCallCoilNo = true,
+//                            isClickedCallYYRRCCT = false,
+//                            isClickedCallSupplierNo = false
+//                        )
 
                         // Mock Fail Case
 //                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(

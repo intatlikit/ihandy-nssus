@@ -74,6 +74,10 @@ fun YardEntryRoute(
                         }
                     ).apply { start() }
                 }
+                YardEntryNavigateType.GO_TO_COIL_DETAIL_LS -> {
+                    navController.navigate(com.nssus.ihandy.navigation.YardEntryScreen.CoilDetlLsYardEntryScreen.route) // com.nssus.ihandy.navigation.YardEntryScreen ถ้าใช้ชื่ออื่นจะไม่ต้องอิมพอทยาว
+                    yardEntryVm.action(YardEntryAction.InitNavigateData)
+                }
                 else -> Unit
             }
         }
