@@ -14,6 +14,7 @@ data class YardEntryUIStateModel(
     var isError: Boolean = false,
     var errorBody: YardEntryErrorModel? = null,
     //
+    var isAlreadyInitialFeature: Boolean = false,
     var dataLs: List<DropdownUIModel> = getDataLs(),
     var isCoilNoTfError: Boolean = false, //
     var isGetCoilRespSuccess: Boolean = false,
@@ -30,55 +31,58 @@ data class YardEntryUIStateModel(
     var isClickedCallYYRRCCT: Boolean = false,
     var isClickedCallSupplierNo: Boolean = false,
     //
-    var coilNoLs: List<CoilDetailItem> = listOf(
-        CoilDetailItem(
-            coilNo = "AAAAAAAA12",
-            status = "",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA13",
-            status = "",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA14",
-            status = "",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA15",
-            status = "YES",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA16",
-            status = "YES",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA17",
-            status = "YES",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA18",
-            status = "YES",
-            dock = "16W"
-        ),
-        CoilDetailItem(
-            coilNo = "AAAAAAAA19",
-            status = "YES",
-            dock = "16W"
-        )
-    ) // emptyList()
+    var coilNoLs: List<CoilDetailItem> = emptyList() // listOf(
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA12",
+//            status = "",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA13",
+//            status = "",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA14",
+//            status = "",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA15",
+//            status = "YES",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA16",
+//            status = "YES",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA17",
+//            status = "YES",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA18",
+//            status = "YES",
+//            dock = "16W"
+//        ),
+//        CoilDetailItem(
+//            coilNo = "AAAAAAAA19",
+//            status = "YES",
+//            dock = "16W"
+//        )
+//    ) // emptyList()
 )
 
 enum class YardEntryNavigateType {
     GO_BACK,
     DISPLAY_BUTTON_DIALOG,
     START_COUNTDOWN_TIMER,
-    NONE
+    GO_TO_COIL_DETAIL_LS,
+    NONE,
+    // Coil Detail List Screen
+    BACK_TO_YARD_ENTRY_MAIN,
 }
 
 data class YardEntryErrorModel(
