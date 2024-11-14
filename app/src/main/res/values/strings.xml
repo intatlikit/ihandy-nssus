@@ -49,6 +49,9 @@
     <string name="yard_entry_yyrrcct_title">YYRRCCT</string>
     <string name="yard_entry_supplier_no_title">Supplier No.</string>
     <string name="yard_entry_display_yyrrcct_title">YYRRCCT</string>
+    <string name="yard_entry_coil_no_count">Count : %s</string>
+
+    <string name="yard_entry_coil_detl_ls_empty_msg">Coil Detail List is Empty</string>
 
     <!-- Inventory Taking -->
     <string name="inv_taking_menu_title">Inventory Taking</string>
