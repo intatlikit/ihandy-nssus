@@ -50,6 +50,7 @@ class YardEntryViewModel(
             }
             is YardEntryAction.TypingCoilNoTextField -> { //
 //                onYardEntryUIStateLoading()
+//                 _yardEntryUISt.value = _yardEntryUISt.value.copy( // ใช้ค่าเดิมแล้วก้อปปี้แก้บางค่าพอ ไม่ล้างด้วยsuccess
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                     coilNo = viewAction.text,
                     isCoilNoTfError = viewAction.text.isErrorTextFieldWith(MAX_LENGTH_COIL_NO),
