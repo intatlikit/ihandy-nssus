@@ -142,6 +142,11 @@ class YardEntryViewModel(
                 )
             }
             is YardEntryAction.ClickButtonToGoToCoilDetailLsScreen -> {
+                if (_yardEntryUISt.value.coilNoLs.isEmpty()) {
+                    // add display some error dialog
+                    return
+                }
+
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
                     navigateType = YardEntryNavigateType.GO_TO_COIL_DETAIL_LS
                 )
@@ -153,7 +158,9 @@ class YardEntryViewModel(
                 )
             }
             is YardEntryAction.ClickConfirmRemoveSelectedCoilNoLs -> {
-                if (_yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove }.isEmpty()) {
+//                _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove }.isEmpty()
+//                _yardEntryUISt.value.coilNoLs.find { it.isSelectedRemove }.isNull()
+                if (_yardEntryUISt.value.coilNoLs.none { it.isSelectedRemove }) {
                     // add display some error dialog
                     return
                 }
