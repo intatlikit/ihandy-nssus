@@ -153,6 +153,10 @@ class YardEntryViewModel(
                 )
             }
             is YardEntryAction.ClickConfirmRemoveSelectedCoilNoLs -> {
+                if (_yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove }.isEmpty()) {
+                    // add display some error dialog
+                    return
+                }
                 onYardEntryUIStateLoading()
                 _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
                     coilNoLs = _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove.not() }
