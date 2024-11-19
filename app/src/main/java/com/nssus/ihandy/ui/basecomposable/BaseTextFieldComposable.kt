@@ -86,19 +86,21 @@ fun BaseTextField(
             when (textFieldType) {
                 TextFieldType.Number -> if (it.text.isEmpty() || it.text.matches(numberPattern)) onValueChanged(it)
                 else -> {
-                    var updatedText = it.text
+                    // Get the updated result text
+                    var updatedTxt = it
 
-                    if (isAutoReplacePrefix) // If TRUE, replace from specific prefix text to new value
-                        updatedText = updatedText.replaceStartSpecificTextToNewValue(checkedPrefixText, newPrefixText)
+                    // If TRUE, replace from specific prefix text to new value
+                    if (isAutoReplacePrefix)
+                        updatedTxt = updatedTxt.copy(
+                            text = updatedTxt.text.replaceStartSpecificTextToNewValue(checkedPrefixText, newPrefixText)
+                        )
 
-                    // If TRUE, convert text to uppercase
-                    if (isAutoGenUpperCase) updatedText = updatedText.uppercase()
+                    // If TRUE, convert the updated result text to uppercase
+                    if (isAutoGenUpperCase)
+                        updatedTxt = updatedTxt.copy(text = updatedTxt.text.uppercase())
 
-                    // Check if the new text is different to avoid unnecessary recomposition
-                    if (updatedText != value.text) {
-                        // Update text (with uppercase or/and remove hyphen from start if needed)
-                        onValueChanged(TextFieldValue(updatedText, it.selection))
-                    } else onValueChanged(it)
+                    // Return the updated result text
+                    onValueChanged(updatedTxt)
                 }
             }
         },
