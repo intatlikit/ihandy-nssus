@@ -18,6 +18,7 @@ import com.nssus.ihandy.model.network.NetworkResult
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.CoilDetailItem
 import com.nssus.ihandy.model.yardentry.YardEntryAction
+import com.nssus.ihandy.model.yardentry.YardEntryDialogAction
 import com.nssus.ihandy.model.yardentry.YardEntryErrorModel
 import com.nssus.ihandy.model.yardentry.YardEntryErrorType
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
@@ -133,9 +134,9 @@ class YardEntryViewModel(
                     (value.isClickedCallYYRRCCT && value.isClickedCallSupplierNo.not()))
                     action(YardEntryAction.ClearAllValueButton)
             }
-            is YardEntryAction.ClickContinueDialogButton -> callCoilApi()
             is YardEntryAction.InitNavigateData -> initNavigateData()
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
+
             // Coil Detail List Screen
             is YardEntryAction.ClickBackToMainYardEntryScreen -> {
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
@@ -170,6 +171,31 @@ class YardEntryViewModel(
                     coilNoLs = _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove.not() }
                 )
             }
+        }
+    }
+
+    fun actionFromDialogWith(dialogAction: YardEntryDialogAction) {
+        when (dialogAction) {
+            is YardEntryDialogAction.ClickLeftDialogButton -> {
+                when (_yardEntryUISt.value.errorBody?.yardEntryErrorType) {
+                    YardEntryErrorType.EMPTY_SHIPMENT_LOT, YardEntryErrorType.ERROR_FROM_API_SHIPMENT_LOT -> {
+                        _yardEntryUISt.value = YardEntryUIStateModel( // create new obj to init all value in state model
+                            isClearAllTextFieldValue = true
+                        )
+                    }
+                    YardEntryErrorType.EMPTY_COIL_NUMBER, YardEntryErrorType.ERROR_FROM_API_COIL_NUMBER -> {
+                        _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                            isGetCoilRespSuccess = true, // just example
+                            coilNo = "" // just example
+                        )
+                    }
+                    else -> { // YardEntryErrorType.ERROR_FROM_API
+                        action(YardEntryAction.InitNavigateData)
+                    }
+                }
+            }
+            is YardEntryDialogAction.ClearAllValue -> action(YardEntryAction.ClearAllValueButton)
+            else -> Unit
         }
     }
 
@@ -219,9 +245,8 @@ class YardEntryViewModel(
                     is NetworkResult.Loading -> onYardEntryUIStateLoading()
                     is NetworkResult.Error -> {
                         _yardEntryUISt.value = onYardEntryUIStateError(
+                            yardEntryErrorType = YardEntryErrorType.ERROR_FROM_API_SHIPMENT_LOT, // ERROR_FROM_API_COIL_NUMBER
                             errorMsg = it.errorMessage
-                        ).copy(
-                            isGetCoilRespSuccess = false
                         )
                     }
                     else -> initNavigateData() // Status Code = 204 or other

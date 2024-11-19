@@ -6,16 +6,18 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryNavigateType
-import com.nssus.ihandy.ui.basecomposable.BaseTitleMsgWithButtonDialog
 import com.nssus.ihandy.ui.basecomposable.CustomLoading
-import com.nssus.ihandy.ui.basecomposable.ErrorDialog
 import com.nssus.ihandy.ui.basecomposable.WarningDialog
 import com.nssus.ihandy.ui.yardentry.viewmodel.YardEntryViewModel
 import android.os.CountDownTimer
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.nssus.ihandy.R
 import com.nssus.ihandy.data.util.AppUtil.getCountDownTimer
+import com.nssus.ihandy.model.yardentry.YardEntryDialogAction
+import com.nssus.ihandy.ui.basecomposable.FailWithDescriptionDialog
 
 @Composable
 fun YardEntryRoute(
@@ -36,25 +38,17 @@ fun YardEntryRoute(
             when (uiYardEntrySt.navigateType) {
                 YardEntryNavigateType.GO_BACK -> {
                     navController.popBackStack()
-//                    yardEntryVm.initNavigateData()
-                    yardEntryVm.action(YardEntryAction.InitNavigateData) //
+                    yardEntryVm.action(YardEntryAction.InitNavigateData)
                 }
                 YardEntryNavigateType.DISPLAY_BUTTON_DIALOG -> {
-//                    BaseTitleMsgWithButtonDialog(
-//                        description = uiYardEntrySt.successMsg,
-//                        onCloseDialog = { yardEntryVm.action(YardEntryAction.InitNavigateData) },
-//                        onLeftButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) },
-//                        onRightButtonClick = { yardEntryVm.action(YardEntryAction.ClearAllValueButton) }
-//                    )
                     WarningDialog(
                         message = uiYardEntrySt.successMsg ?: "-",
-                        onLeftDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) },
-                        onRightDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClearAllValueButton) }
+                        onLeftDialogButtonClick = {},
+                        onRightDialogButtonClick = {
+//                            yardEntryVm.action(YardEntryAction.ClearAllValueButton)
+                            yardEntryVm.actionFromDialogWith(YardEntryDialogAction.ClearAllValue)
+                        }
                     )
-//                    ErrorDialog(
-//                        message = uiYardEntrySt.successMsg ?: "-",
-//                        onDialogButtonClick = { yardEntryVm.action(YardEntryAction.ClickContinueDialogButton) }
-//                    )
                 }
                 YardEntryNavigateType.START_COUNTDOWN_TIMER -> {
                     yardEntryVm.action(YardEntryAction.InitNavigateData) //
@@ -81,7 +75,15 @@ fun YardEntryRoute(
                 else -> Unit
             }
         }
-        uiYardEntrySt.isError -> {}
+        uiYardEntrySt.isError -> {
+            val errorMsg = uiYardEntrySt.errorBody?.errorMsg
+
+            FailWithDescriptionDialog(
+                description = if (errorMsg.isNullOrEmpty()) stringResource(id = uiYardEntrySt.errorBody?.yardEntryErrorType?.errorMsgId ?: R.string.dash_string)
+                else errorMsg,
+                onCloseDialog = { yardEntryVm.actionFromDialogWith(YardEntryDialogAction.ClickLeftDialogButton) }
+            )
+        }
     }
 
     YardEntryScreen(

@@ -47,7 +47,7 @@
     <string name="yard_entry_menu_title">Yard Entry</string>
     <string name="yard_entry_coil_no_title">Coil no.</string>
     <string name="yard_entry_yyrrcct_title">YYRRCCT</string>
-    <string name="yard_entry_supplier_no_title">Supplier No.</string>
+    <string name="yard_entry_supplier_no_title">Sup No.</string>
     <string name="yard_entry_display_yyrrcct_title">YYRRCCT</string>
     <string name="yard_entry_coil_no_count">Count : %s</string>
 

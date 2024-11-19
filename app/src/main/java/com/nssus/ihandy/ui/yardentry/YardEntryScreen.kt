@@ -1,9 +1,7 @@
 package com.nssus.ihandy.ui.yardentry
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,46 +25,30 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.nssus.ihandy.R
 import com.nssus.ihandy.data.extension.getMatchedItem
-import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.isNotNull
 import com.nssus.ihandy.data.extension.padStart
-import com.nssus.ihandy.data.extension.padStartCustom
-import com.nssus.ihandy.data.extension.simpleVerticalScrollbar
 import com.nssus.ihandy.model.ui.DropdownUIModel
 import com.nssus.ihandy.model.yardentry.CoilDetailItem
 import com.nssus.ihandy.model.yardentry.YardEntryAction
 import com.nssus.ihandy.model.yardentry.YardEntryUIStateModel
 import com.nssus.ihandy.ui.basecomposable.BaseButton
-import com.nssus.ihandy.ui.basecomposable.BaseDropdownDialog
 import com.nssus.ihandy.ui.basecomposable.BaseHeader
 import com.nssus.ihandy.ui.basecomposable.RowPairButton
-import com.nssus.ihandy.ui.basecomposable.TitleAndGrayBgValueText
 import com.nssus.ihandy.ui.basecomposable.TopTitleAndBaseTextField
 import com.nssus.ihandy.ui.basecomposable.BaseContentCardWithBackButton
-import com.nssus.ihandy.ui.basecomposable.PrefixTitleAndGrayBgValueTextWithIcon
 import com.nssus.ihandy.ui.basecomposable.Table2ColumnDetailRow
 import com.nssus.ihandy.ui.basecomposable.Table2ColumnHeaderRow
-import com.nssus.ihandy.ui.basecomposable.Table3ColumnDetailRow
-import com.nssus.ihandy.ui.basecomposable.Table3ColumnHeaderRow
-import com.nssus.ihandy.ui.theme.BaseGreen
 import com.nssus.ihandy.ui.theme.Dimens
-import com.nssus.ihandy.ui.theme.FontStyles
 import com.nssus.ihandy.ui.theme.SilverGray
-import com.nssus.ihandy.ui.theme.StatusRed
-import com.nssus.ihandy.ui.theme.White87
-import com.nssus.ihandy.ui.yardentry.basecomposable.BaseDropdownDialogWithButton
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_COIL_NO
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_SUPPLIER_NO
 import com.nssus.ihandy.ui.yardentry.constant.YardEntryConstant.MAX_LENGTH_YYRRCCT
@@ -174,7 +155,7 @@ fun YardEntryScreen(
                     modifier = Modifier
                         .weight(.51f)
                         .focusRequester(thirdFocusRequester),
-                    titleId = R.string.yard_entry_coil_no_title, // yard_entry_supplier_no_title
+                    titleId = R.string.yard_entry_supplier_no_title,
                     tfValue = supplierNoTxt,
                     tfMaxLength = MAX_LENGTH_SUPPLIER_NO,
                     onTfValueChanged = {
@@ -191,6 +172,7 @@ fun YardEntryScreen(
                         .offset(y = 3.dp)
                         .padding(start = Dimens.space_textfield_to_textfield)
                         .weight(.49f),
+                    textButtonModifier = Modifier,
                     textFontWeight = FontWeight.Normal,
                     contentPadding = PaddingValues(0.dp),
                     text = stringResource(id = R.string.yard_entry_coil_no_count, uiYardEntrySt.coilNoLs.count().padStart()), // padStartCustom

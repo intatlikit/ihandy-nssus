@@ -16,7 +16,6 @@ sealed interface YardEntryAction {
     object SetInitFlagGetYYRRCCTResp : YardEntryAction
     object ClickNextActionSupplierNoTextField : YardEntryAction
     object SetInitFlagGetSupplierNoResp : YardEntryAction
-    object ClickContinueDialogButton : YardEntryAction
     object InitNavigateData : YardEntryAction
     object SetInitFlagClearAllTextField : YardEntryAction
     object CheckGetDataBeforeClearAllValue : YardEntryAction
@@ -25,4 +24,9 @@ sealed interface YardEntryAction {
     object ClickBackToMainYardEntryScreen : YardEntryAction
     data class SelectCoilDetailItem(val selectedData: CoilDetailItem) : YardEntryAction
     object ClickConfirmRemoveSelectedCoilNoLs : YardEntryAction
+}
+
+interface YardEntryDialogAction {
+    object ClickLeftDialogButton : YardEntryDialogAction
+    object ClearAllValue : YardEntryDialogAction
 }

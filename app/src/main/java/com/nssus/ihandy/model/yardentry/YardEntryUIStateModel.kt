@@ -31,48 +31,7 @@ data class YardEntryUIStateModel(
     var isClickedCallYYRRCCT: Boolean = false,
     var isClickedCallSupplierNo: Boolean = false,
     //
-    var coilNoLs: List<CoilDetailItem> = emptyList() // listOf(
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA12",
-//            status = "",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA13",
-//            status = "",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA14",
-//            status = "",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA15",
-//            status = "YES",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA16",
-//            status = "YES",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA17",
-//            status = "YES",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA18",
-//            status = "YES",
-//            dock = "16W"
-//        ),
-//        CoilDetailItem(
-//            coilNo = "AAAAAAAA19",
-//            status = "YES",
-//            dock = "16W"
-//        )
-//    ) // emptyList()
+    var coilNoLs: List<CoilDetailItem> = emptyList()
 )
 
 enum class YardEntryNavigateType {
@@ -91,6 +50,9 @@ data class YardEntryErrorModel(
 )
 
 enum class YardEntryErrorType(@StringRes val errorMsgId: Int = R.string.empty_string) {
-    //    DATA_NOT_FOUND(R.string.base_data_not_found),
+    EMPTY_SHIPMENT_LOT(R.string.dash_string), // convert to ur own
+    EMPTY_COIL_NUMBER(R.string.dash_string), // convert to ur own
+    ERROR_FROM_API_SHIPMENT_LOT,
+    ERROR_FROM_API_COIL_NUMBER,
     ERROR_FROM_API
 }
