@@ -136,13 +136,6 @@ class YardEntryViewModel(
             }
             is YardEntryAction.InitNavigateData -> initNavigateData()
             is YardEntryAction.SelectDataDropdown -> selectDataDropdown(viewAction.selectedData)
-
-            // Coil Detail List Screen
-            is YardEntryAction.ClickBackToMainYardEntryScreen -> {
-                _yardEntryUISt.value = onYardEntryUIStateSuccess(
-                    navigateType = YardEntryNavigateType.BACK_TO_YARD_ENTRY_MAIN
-                )
-            }
             is YardEntryAction.ClickButtonToGoToCoilDetailLsScreen -> {
                 if (_yardEntryUISt.value.coilNoLs.isEmpty()) {
                     // add display some error dialog
@@ -151,6 +144,13 @@ class YardEntryViewModel(
 
                 _yardEntryUISt.value = onYardEntryUIStateSuccess(
                     navigateType = YardEntryNavigateType.GO_TO_COIL_DETAIL_LS
+                )
+            }
+
+            // Coil Detail List Screen
+            is YardEntryAction.ClickBackToMainYardEntryScreen -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                    navigateType = YardEntryNavigateType.BACK_TO_YARD_ENTRY_MAIN
                 )
             }
             is YardEntryAction.SelectCoilDetailItem -> {
@@ -180,7 +180,8 @@ class YardEntryViewModel(
                 when (_yardEntryUISt.value.errorBody?.yardEntryErrorType) {
                     YardEntryErrorType.EMPTY_SHIPMENT_LOT, YardEntryErrorType.ERROR_FROM_API_SHIPMENT_LOT -> {
                         _yardEntryUISt.value = YardEntryUIStateModel( // create new obj to init all value in state model
-                            isClearAllTextFieldValue = true
+                            isClearAllTextFieldValue = true,
+                            isAlreadyInitialFeature = true
                         )
                     }
                     YardEntryErrorType.EMPTY_COIL_NUMBER, YardEntryErrorType.ERROR_FROM_API_COIL_NUMBER -> {
