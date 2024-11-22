@@ -29,4 +29,6 @@ sealed interface YardEntryAction {
 interface YardEntryDialogAction {
     object ClickLeftDialogButton : YardEntryDialogAction
     object ClearAllValue : YardEntryDialogAction
+    object ClickConfirmRemoveDialogButton : YardEntryDialogAction
+    object ClickCancelRemoveDialogButton : YardEntryDialogAction
 }

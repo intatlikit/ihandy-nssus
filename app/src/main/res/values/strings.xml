@@ -52,6 +52,7 @@
     <string name="yard_entry_coil_no_count">Count : %s</string>
 
     <string name="yard_entry_coil_detl_ls_empty_msg">Coil Detail List is Empty</string>
+    <string name="yard_entry_coil_detl_ls_confirm_remove_msg">Confirm Remove Coil</string>
 
     <!-- Inventory Taking -->
     <string name="inv_taking_menu_title">Inventory Taking</string>

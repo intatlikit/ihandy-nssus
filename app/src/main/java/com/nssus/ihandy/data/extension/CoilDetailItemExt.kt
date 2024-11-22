@@ -15,6 +15,8 @@ fun List<CoilDetailItem>.setSelectedRemoveFrom(selectedCoilDetl: CoilDetailItem)
             ?.let { it.isSelectedRemove = it.isSelectedRemove.not() }
     }
 
+fun List<CoilDetailItem>.getSelectedRemoveItem(): CoilDetailItem? = find { it.isSelectedRemove }
+
 fun List<CoilDetailItem>.getMatchedItem(): CoilDetailItem? = find { it.isMatched }
 
 //fun List<CoilDetailItem>.getMatchedItemCoilNo(): String? = getSelectedItem()?.coilNo // ถ้าเป็นเรสปอนเอพีไอ ค่อย dot เข้าไปอีกชั้นเพื่อเอาค่า coil เป็นต้น

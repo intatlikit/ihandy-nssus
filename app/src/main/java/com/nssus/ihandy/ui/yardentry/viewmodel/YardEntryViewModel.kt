@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.nssus.ihandy.R
 import com.nssus.ihandy.data.extension.getSelectedItem
 import com.nssus.ihandy.data.extension.getSelectedItemValue
+import com.nssus.ihandy.data.extension.getSelectedRemoveItem
 import com.nssus.ihandy.data.extension.isEqualsMaxLength
 import com.nssus.ihandy.data.extension.isErrorTextFieldWith
 import com.nssus.ihandy.data.extension.isNull
@@ -154,12 +155,13 @@ class YardEntryViewModel(
                 )
             }
             is YardEntryAction.SelectCoilDetailItem -> {
-                onYardEntryUIStateLoading()
-                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                _yardEntryUISt.value = onYardEntryUIStateSuccess(
+                    navigateType = YardEntryNavigateType.DISPLAY_CONFIRM_REMOVE_COIL_DIALOG
+                ).copy(
                     coilNoLs = _yardEntryUISt.value.coilNoLs.setSelectedRemoveFrom(viewAction.selectedData)
                 )
             }
-            is YardEntryAction.ClickConfirmRemoveSelectedCoilNoLs -> {
+            is YardEntryAction.ClickConfirmRemoveSelectedCoilNoLs -> { // ไม่ได้ใช้
 //                _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove }.isEmpty()
 //                _yardEntryUISt.value.coilNoLs.find { it.isSelectedRemove }.isNull()
                 if (_yardEntryUISt.value.coilNoLs.none { it.isSelectedRemove }) {
@@ -196,6 +198,18 @@ class YardEntryViewModel(
                 }
             }
             is YardEntryDialogAction.ClearAllValue -> action(YardEntryAction.ClearAllValueButton)
+            is YardEntryDialogAction.ClickConfirmRemoveDialogButton -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    coilNoLs = _yardEntryUISt.value.coilNoLs.filter { it.isSelectedRemove.not() }
+                )
+            }
+            is YardEntryDialogAction.ClickCancelRemoveDialogButton -> {
+                _yardEntryUISt.value = onYardEntryUIStateSuccess().copy(
+                    coilNoLs = _yardEntryUISt.value.coilNoLs.apply {
+                        getSelectedRemoveItem()?.let { it.isSelectedRemove = false }
+                    }
+                )
+            }
             else -> Unit
         }
     }

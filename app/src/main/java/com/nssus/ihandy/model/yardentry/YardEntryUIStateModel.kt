@@ -42,6 +42,7 @@ enum class YardEntryNavigateType {
     NONE,
     // Coil Detail List Screen
     BACK_TO_YARD_ENTRY_MAIN,
+    DISPLAY_CONFIRM_REMOVE_COIL_DIALOG
 }
 
 data class YardEntryErrorModel(
