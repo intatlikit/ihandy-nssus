@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -37,13 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import com.nssus.ihandy.R
+import com.nssus.ihandy.ui.theme.ButtonSky
 import com.nssus.ihandy.ui.theme.FontStyles
 import com.nssus.ihandy.ui.theme.SilverGray
 
 @Composable
 fun DisplayWebViewButton(
     @StringRes buttonTextId: Int = R.string.common_open_web_view_button,
-    url: String
+    url: String = "https://www.google.co.th"
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -51,6 +54,33 @@ fun DisplayWebViewButton(
         text = stringResource(id = buttonTextId),
         onButtonClick = { showDialog = true }
     )
+
+    if (showDialog) {
+        FullScreenWebViewDialog(
+            url = url,
+            onDismiss = { showDialog = false }
+        )
+    }
+}
+
+@Composable
+fun DisplayWebViewFloatingButton(
+    @StringRes buttonTextId: Int = R.string.home_shipping_yard_p2_floating_button,
+    url: String = "https://www.google.co.th"
+) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    FloatingActionButton(
+        modifier = Modifier.offset(x = (-20).dp, y = (-15).dp),
+        onClick = { showDialog = true },
+        containerColor = ButtonSky
+    ) {
+        Text(
+            text = stringResource(id = buttonTextId),
+            style = FontStyles.txt20,
+            color = Color.White
+        )
+    }
 
     if (showDialog) {
         FullScreenWebViewDialog(
