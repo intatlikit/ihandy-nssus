@@ -42,6 +42,7 @@
     <!-- Home -->
     <string name="home_user_role_packing_title">Packing Operation</string>
     <string name="home_user_role_shipping_title">Shipping Operation</string>
+    <string name="home_shipping_yard_p2_floating_button">P2</string>
 
     <!-- Yard Entry -->
     <string name="yard_entry_menu_title">Yard Entry</string>
