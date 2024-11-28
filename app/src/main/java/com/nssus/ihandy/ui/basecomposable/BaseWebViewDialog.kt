@@ -185,7 +185,9 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                         webView = this
 
                         settings.javaScriptEnabled = true
-                        settings.builtInZoomControls = true
+                        settings.setSupportZoom(true) // Enable zoom functionality
+                        settings.builtInZoomControls = true // Show zoom controls
+                        settings.displayZoomControls = false // Optional: hide on-screen zoom controls
                         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
                         // Custom WebViewClient to track URL and title changes
