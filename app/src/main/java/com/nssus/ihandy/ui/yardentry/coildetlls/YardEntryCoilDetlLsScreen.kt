@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -41,9 +41,9 @@ fun YardEntryCoilDetlLsScreen(
     Column(
         modifier = Modifier
             .background(Color.White)
-            .fillMaxHeight() //
-            .padding(vertical = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .padding(vertical = 20.dp)
+//        , horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -77,10 +77,10 @@ fun YardEntryCoilDetlLsScreen(
             } else {
                 items(uiYardEntrySt.coilNoLs) { coilDetl ->
                     Column(modifier = Modifier.clickable { onAction(YardEntryAction.SelectCoilDetailItem(coilDetl)) }) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+//                        Row(
+//                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+//                            verticalAlignment = Alignment.CenterVertically
+//                        ) {
 //                            if (coilDetl.isSelectedRemove) {
 //                                Image(
 //                                    modifier = Modifier.size(26.dp),
@@ -89,12 +89,18 @@ fun YardEntryCoilDetlLsScreen(
 //                                )
 //                                Spacer(modifier = Modifier.width(8.dp))
 //                            }
-                            Text(
-                                text = coilDetl.coilNo,
-                                style = FontStyles.txt20,
-                                color = Color.Black
-                            )
-                        }
+//                            Text(
+//                                text = coilDetl.coilNo,
+//                                style = FontStyles.txt20,
+//                                color = Color.Black
+//                            )
+//                        }
+                        Text(
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            text = coilDetl.coilNo,
+                            style = FontStyles.txt20,
+                            color = Color.Black
+                        )
                         Divider(
                             modifier = Modifier
                                 .height(1.dp)
