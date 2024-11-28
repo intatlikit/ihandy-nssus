@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,7 +41,6 @@ import androidx.compose.ui.window.DialogProperties
 import com.nssus.ihandy.R
 import com.nssus.ihandy.ui.theme.ButtonSky
 import com.nssus.ihandy.ui.theme.FontStyles
-import com.nssus.ihandy.ui.theme.MainGray
 import com.nssus.ihandy.ui.theme.SilverGray
 
 @Composable
@@ -109,7 +107,7 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
     }
 
     AlertDialog(
-        onDismissRequest = {},
+        onDismissRequest = { if (canGoBack) webView?.goBack() else onDismiss() },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -122,20 +120,20 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Back and Refresh Button
-                Row {
-                    if (canGoBack) {
-                        IconButton(
-                            modifier = Modifier.size(36.dp),
-                            onClick = { webView?.goBack() },
-                            enabled = canGoBack
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowLeft,
-                                contentDescription = "Back Icon",
-                                tint = Color.Black
-                            )
-                        }
-                    }
+//                Row {
+//                    if (canGoBack) {
+//                        IconButton(
+//                            modifier = Modifier.size(36.dp),
+//                            onClick = { webView?.goBack() },
+//                            enabled = canGoBack
+//                        ) {
+//                            Icon(
+//                                imageVector = Icons.Default.KeyboardArrowLeft,
+//                                contentDescription = "Back Icon",
+//                                tint = Color.Black
+//                            )
+//                        }
+//                    }
                     IconButton(
                         modifier = Modifier.size(36.dp),
                         onClick = { webView?.reload() }
@@ -146,24 +144,25 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                             tint = Color.Black
                         )
                     }
-                }
+//                }
                 // Title and Url name
-                Column(modifier = Modifier.weight(1f)) {
+//                Column(modifier = Modifier.weight(1f)) {
                     Text(
+                        modifier = Modifier.weight(1f),
                         text = currentTitle, // Display the title here
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                         style = FontStyles.txt14,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        text = currentUrl, // Display the url here
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                        style = FontStyles.txt14,
-                        color = MainGray
-                    )
-                }
+//                    Text(
+//                        text = currentUrl, // Display the url here
+//                        overflow = TextOverflow.Ellipsis,
+//                        maxLines = 1,
+//                        style = FontStyles.txt14,
+//                        color = MainGray
+//                    )
+//                }
                 // Close WebView Dialog Button
                 IconButton(
                     modifier = Modifier.size(36.dp),
