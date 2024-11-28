@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.nssus.ihandy.R
 import com.nssus.ihandy.ui.theme.ButtonSky
 import com.nssus.ihandy.ui.theme.FontStyles
+import com.nssus.ihandy.ui.theme.MainGray
 import com.nssus.ihandy.ui.theme.SilverGray
 
 @Composable
@@ -95,7 +97,8 @@ fun DisplayWebViewFloatingButton(
 fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
     var webView: WebView? = remember { null }
     var canGoBack by remember { mutableStateOf(false) }
-    var currentUrl by remember { mutableStateOf(url) } // Holds the current URL
+    var currentUrl by remember { mutableStateOf(url) }
+    var currentTitle by remember { mutableStateOf("") } // State for the title
 
     // Track changes to `canGoBack` when navigating in WebView
     LaunchedEffect(webView) {
@@ -118,17 +121,20 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Back and Refresh Button
                 Row {
-                    IconButton(
-                        modifier = Modifier.size(36.dp),
-                        onClick = { webView?.goBack() },
-                        enabled = canGoBack // Enables button only if WebView can go back
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowLeft,
-                            contentDescription = "Back Icon",
-                            tint = if (canGoBack) Color.Black else Color.White
-                        )
+                    if (canGoBack) {
+                        IconButton(
+                            modifier = Modifier.size(36.dp),
+                            onClick = { webView?.goBack() },
+                            enabled = canGoBack
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "Back Icon",
+                                tint = Color.Black
+                            )
+                        }
                     }
                     IconButton(
                         modifier = Modifier.size(36.dp),
@@ -141,13 +147,24 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                         )
                     }
                 }
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = currentUrl,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    style = FontStyles.txt14
-                )
+                // Title and Url name
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = currentTitle, // Display the title here
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = FontStyles.txt14,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = currentUrl, // Display the url here
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                        style = FontStyles.txt14,
+                        color = MainGray
+                    )
+                }
+                // Close WebView Dialog Button
                 IconButton(
                     modifier = Modifier.size(36.dp),
                     onClick = onDismiss
@@ -168,19 +185,24 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
                         webView = this
 
                         settings.javaScriptEnabled = true
-                        settings.builtInZoomControls = true // Enable Zoom Gesture
+                        settings.builtInZoomControls = true
                         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
-                        // Custom WebViewClient to track URL changes
+                        // Custom WebViewClient to track URL and title changes
                         webViewClient = object : WebViewClient() {
                             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                                 super.onPageStarted(view, url, favicon)
                                 currentUrl = url ?: ""
+                                currentTitle = "Loading..."
                             }
-//                            override fun onPageFinished(view: WebView, url: String?) {
-//                                super.onPageFinished(view, url)
-//                                currentUrl = url ?: ""
-//                            }
+
+                            override fun onPageFinished(view: WebView, url: String?) {
+                                super.onPageFinished(view, url)
+                                // Fetch the title using JavaScript
+                                view.evaluateJavascript("document.title") { title ->
+                                    currentTitle = title.trim('"') // Remove surrounding quotes
+                                }
+                            }
                         }
 
                         loadUrl(url)
@@ -193,6 +215,7 @@ fun FullScreenWebViewDialog(url: String, onDismiss: () -> Unit) {
         }
     }
 }
+
 
 @Preview(showBackground = true, locale = "th")
 @Composable
