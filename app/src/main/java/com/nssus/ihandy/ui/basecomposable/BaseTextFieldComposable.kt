@@ -69,7 +69,7 @@ fun BaseTextField(
     val borderColor = if (isTextFieldError) color.errorBorderColor else color.borderColor // color.borderColor
 
     val keyboardOptions = when (textFieldType) {
-        TextFieldType.Number -> KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction = ImeAction.Next)
+        TextFieldType.Number -> KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next)
         TextFieldType.Password -> KeyboardOptions(keyboardType = KeyboardType.Password)
         else -> KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next)
     }
@@ -84,7 +84,7 @@ fun BaseTextField(
         value = value,
         onValueChange = {
             when (textFieldType) {
-                TextFieldType.Number -> if (it.text.isEmpty() || it.text.matches(numberPattern)) onValueChanged(it)
+                TextFieldType.Number -> if (it.text.matches(numberPattern)) onValueChanged(it)
                 else -> {
                     // Get the updated result text
                     var updatedTxt = it
