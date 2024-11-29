@@ -96,6 +96,7 @@ fun LoginScreen(
                                 LoginTextField(
                                     titleId = R.string.login_user_id_title,
                                     tfValue = usernameTxt,
+                                    tfType = TextFieldType.Number,
                                     onTfValueChanged = {
                                         usernameTxt = it
                                         onAction(LoginAction.TypingUsernameTextField(usernameTxt.text))
