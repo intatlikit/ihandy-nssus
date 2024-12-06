@@ -3,12 +3,6 @@ package com.nssus.ihandy.ui.home.viewmodel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.nssus.ihandy.data.constant.AppConstant.USER_ROLE
-import com.nssus.ihandy.data.constant.HomeMenuConstant.PACKING_OP_MENU
-import com.nssus.ihandy.data.constant.HomeMenuConstant.SHIPPING_OP_MENU
-import com.nssus.ihandy.data.constant.ValueConstant.USER_ROLE_PACKING
-import com.nssus.ihandy.data.constant.ValueConstant.USER_ROLE_SHIPPING
-import com.nssus.ihandy.model.home.DisplayHomeModel
 import com.nssus.ihandy.model.home.HomeErrorModel
 import com.nssus.ihandy.model.home.HomeErrorType
 import com.nssus.ihandy.model.home.HomeMenuItem
@@ -21,19 +15,19 @@ class HomeViewModel(
     private val _homeUISt = mutableStateOf(HomeUIStateModel())
     val homeUISt: State<HomeUIStateModel> = _homeUISt
 
-    fun getMenuData() {
-        _homeUISt.value = HomeUIStateModel( // init state model
-            menuData = when (USER_ROLE) {
-                USER_ROLE_PACKING -> PACKING_OP_MENU
-                USER_ROLE_SHIPPING -> SHIPPING_OP_MENU
-                else -> {
-//                    if (USER_ROLE.contains("PRODUCTION")) PRODUCTION_OP_MENU
-//                    else DisplayHomeModel()
-                    DisplayHomeModel()
-                }
-            }
-        )
-    }
+//    fun getMenuData() {
+//        _homeUISt.value = HomeUIStateModel( // init state model
+//            menuData = when (USER_ROLE) {
+//                USER_ROLE_PACKING -> PACKING_OP_MENU
+//                USER_ROLE_SHIPPING -> SHIPPING_OP_MENU
+//                else -> {
+////                    if (USER_ROLE.contains("PRODUCTION")) PRODUCTION_OP_MENU
+////                    else DisplayHomeModel()
+//                    DisplayHomeModel()
+//                }
+//            }
+//        )
+//    }
 
     fun selectMenu(selectedMenu: HomeMenuItem) {
         _homeUISt.value = onHomeUIStateSuccess(

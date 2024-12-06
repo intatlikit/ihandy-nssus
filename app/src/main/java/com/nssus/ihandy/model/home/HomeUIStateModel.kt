@@ -11,7 +11,7 @@ data class HomeUIStateModel(
     var isError: Boolean = false,
     var errorBody: HomeErrorModel? = null,
     // other values
-    var menuData: DisplayHomeModel = DisplayHomeModel(),
+//    var menuData: DisplayHomeModel = DisplayHomeModel(),
     var selectedRoute: String = ""
 )
 

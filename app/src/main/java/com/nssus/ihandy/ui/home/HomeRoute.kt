@@ -1,7 +1,6 @@
 package com.nssus.ihandy.ui.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import com.nssus.ihandy.model.home.HomeNavigateType
@@ -15,9 +14,9 @@ fun HomeRoute(
 ) {
     val uiHomeSt by homeVm.homeUISt
 
-    LaunchedEffect(Unit) {
-        homeVm.getMenuData()
-    }
+//    LaunchedEffect(Unit) {
+//        homeVm.getMenuData()
+//    }
 
     when {
         uiHomeSt.isLoading -> CustomLoading()
@@ -38,7 +37,7 @@ fun HomeRoute(
     }
 
     HomeScreen(
-        menuData = uiHomeSt.menuData,
+//        menuData = uiHomeSt.menuData,
         onMenuItemClick = homeVm::selectMenu
     )
 }
