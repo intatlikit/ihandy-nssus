@@ -1,10 +1,15 @@
 package com.nssus.ihandy.data.interceptor
 
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.nssus.ihandy.BuildConfig
 import com.nssus.ihandy.data.constant.AppConstant.APP_TOKEN
 import com.nssus.ihandy.data.constant.ValueConstant.PREFIX_TOKEN
+import com.nssus.ihandy.data.constant.ValueConstant.REFRESH_TOKEN_API_EXPIRED_FORCE_RESTART_APP_TIME
 import com.nssus.ihandy.data.constant.ValueConstant.REQ_HEADER_AUTHORIZATION
+import com.nssus.ihandy.data.extension.restartIHandyApp
 import com.nssus.ihandy.data.network.exception.UnAuthorizeException
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,10 +17,12 @@ import kotlinx.coroutines.runBlocking
 import com.nssus.ihandy.data.network.provideOkHttpClientForInterceptor
 import com.nssus.ihandy.data.network.provideRetrofit
 import com.nssus.ihandy.data.service.UserService
+import com.nssus.ihandy.data.util.AppUtil.getCountDownTimer
 import okhttp3.logging.HttpLoggingInterceptor
 import java.net.HttpURLConnection
 
 class AuthInterceptor(
+    private val context: Context,
     private val loggingInterceptor: HttpLoggingInterceptor,
     private val chucker: ChuckerInterceptor,
     private val noConnectionInterceptor: NoConnectionInterceptor
@@ -69,7 +76,16 @@ class AuthInterceptor(
                     return@runBlocking responseWithNewToken // อาจจะรีเทินปกติไม่ต้อง @ ไม่ก็ reponse = responseWithNewToken
                 } else {
                     println("Check response code condition is NOT Successful")
-                    throw UnAuthorizeException()
+                    // Force Restart App in Specific time
+                    Handler(Looper.getMainLooper()).apply {
+                        post {
+                            getCountDownTimer(
+                                countDownTimeInSec = REFRESH_TOKEN_API_EXPIRED_FORCE_RESTART_APP_TIME,
+                                onCountDownFinish = { context.restartIHandyApp() }
+                            ).apply { start() }
+                        }
+                    }
+                    throw UnAuthorizeException() // Change ur own
                 }
             }
             // Retry the request with a new token if available

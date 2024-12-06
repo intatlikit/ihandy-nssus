@@ -19,7 +19,7 @@ val networkModule = module {
     single { NoConnectionInterceptor(get()) }
     single { RequestInterceptor() } // get()
     single { provideLoggingInterceptor() }
-    single { AuthInterceptor(get(), get(named("chucker")), get()) }
+    single { AuthInterceptor(get(), get(), get(named("chucker")), get()) }
 
     // Network
     single { provideRetrofit(get(), get(), get()) }

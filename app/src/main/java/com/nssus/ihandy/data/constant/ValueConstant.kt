@@ -9,6 +9,9 @@ object ValueConstant {
     // Network Timeout
     const val TIME_OUT = 120L
 
+    // Refresh Token API Expired then FORCE Restart App Time in Second
+    const val REFRESH_TOKEN_API_EXPIRED_FORCE_RESTART_APP_TIME = 2L
+
     // Network Request Header Key
     const val REQ_HEADER_KEY_CONTENT_TYPE = "Content-Type"
     const val REQ_HEADER_LANGUAGE = "Language"
