@@ -168,6 +168,7 @@ fun BaseTextField(
             }
         },
         keyboardActions = KeyboardActions(
+            onDone = { focusManager.clearFocus() },
             onNext = {
                 println("onNext Click")
                 onNextActionClick()
