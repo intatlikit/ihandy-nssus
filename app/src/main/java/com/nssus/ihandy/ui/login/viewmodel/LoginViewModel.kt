@@ -4,11 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nssus.ihandy.data.constant.AppConstant.APP_TOKEN
-import com.nssus.ihandy.data.constant.AppConstant.USER_ROLE
-import com.nssus.ihandy.data.constant.ValueConstant.USER_ROLE_PACKING
-import com.nssus.ihandy.data.constant.ValueConstant.USER_ROLE_SHIPPING
-import com.nssus.ihandy.data.usecase.AuthenUseCase
+import com.nssus.ihandy.data.constant.AppConstant.USERNAME
 import com.nssus.ihandy.data.usecase.HomeUseCase
 import com.nssus.ihandy.model.login.LoginAction
 import com.nssus.ihandy.model.login.LoginErrorModel
@@ -58,7 +54,7 @@ class LoginViewModel(
                     is NetworkResult.Success200 -> {
                         println("Status Code: 200")
 
-                        USER_ROLE = if (username.isEmpty()) USER_ROLE_PACKING else USER_ROLE_SHIPPING // เกทจากค่าในเอพีไอ หรือจากซักที่ เพื่อเซต แต่ทำใน homeวิวโมเดล ไ่ม่ก้ของเมน
+                        USERNAME = username
 
                         _loginUISt.value = onLoginUIStateSuccess(
                             navigateType = LoginNavigateType.GO_TO_MAIN
@@ -66,7 +62,6 @@ class LoginViewModel(
                     }
                     is NetworkResult.Success -> {
                         println("Status Code: ${it.statusCode}")
-                        USER_ROLE = if (username.isEmpty()) USER_ROLE_PACKING else USER_ROLE_SHIPPING // เกทจากค่าในเอพีไอ หรือจากซักที่ เพื่อเซต แต่ทำใน homeวิวโมเดล ไ่ม่ก้ของเมน
 
                         _loginUISt.value = onLoginUIStateSuccess(
                             navigateType = LoginNavigateType.GO_TO_MAIN,
