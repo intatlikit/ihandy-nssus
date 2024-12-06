@@ -50,8 +50,8 @@ class AuthInterceptor(
                     println("refreshTokenResponse data: $refreshTokenData")
 
                     // Store Necessary Token into Global Variable to use anywhere in application
-//                    APP_TOKEN = if (newAccessToken.isNullOrEmpty()) APP_TOKEN else APP_TOKEN = newAccessToken
-//                    REFRESH_TOKEN = if (newRefreshToken.isNullOrEmpty()) REFRESH_TOKEN else REFRESH_TOKEN = newRefreshToken
+//                    APP_TOKEN = if (newAccessToken.isNullOrEmpty()) APP_TOKEN else newAccessToken
+//                    REFRESH_TOKEN = if (newRefreshToken.isNullOrEmpty()) REFRESH_TOKEN else newRefreshToken
 
                     // Set up the original request with the new token
                     val requestWithNewToken = originalRequest.newBuilder()
