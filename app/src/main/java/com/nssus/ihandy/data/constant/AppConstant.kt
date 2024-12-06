@@ -3,6 +3,7 @@ package com.nssus.ihandy.data.constant
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.nssus.ihandy.model.home.DisplayHomeModel
 
 object AppConstant {
 
@@ -11,5 +12,6 @@ object AppConstant {
     var USER_ROLE by mutableStateOf("")
     var USERNAME = ""
     var APP_TOKEN = ""
+    var MAIN_MENU by mutableStateOf(DisplayHomeModel())
 
 }
