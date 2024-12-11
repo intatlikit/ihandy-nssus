@@ -36,7 +36,7 @@ fun MainRoute(
                 else -> Unit
             }
         }
-        uiMainSt.isError -> {
+        uiMainSt.isError -> { // ADD Warning Dialog
 
         }
     }
