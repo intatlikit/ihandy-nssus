@@ -45,7 +45,7 @@ class MainViewModel(
 
                         _mainUISt.value = onMainUIStateSuccess()
                     }
-                    is NetworkResult.Loading -> onMainUIStateLoading()
+                    is NetworkResult.Loading -> _mainUISt.value = MainUIStateModel(isLoading = true)
                     is NetworkResult.Error -> {
                         _mainUISt.value = onMainUIStateError(
                             errorMsg = it.errorMessage
