@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.nssus.ihandy.R
 import com.nssus.ihandy.ui.theme.BaseGreen
 import com.nssus.ihandy.ui.theme.FontStyles
+import com.nssus.ihandy.ui.theme.SilverGray
 import com.nssus.ihandy.ui.theme.StatusRed
 import com.nssus.ihandy.ui.theme.White87
 
@@ -118,20 +120,25 @@ fun Table3ColumnDetailRow(
 fun Table2ColumnHeaderRow(
     firstColumnWeight: Float = .7f,
     secondColumnWeight: Float = .3f,
-    @StringRes firstTileId: Int = R.string.common_coil_no_table_title,
-    @StringRes secondTileId: Int = R.string.common_status_table_title
+    rowBackgroundColor: Color = SilverGray,
+    @StringRes firstTitleId: Int = R.string.common_coil_no_table_title,
+    @StringRes secondTitleId: Int = R.string.common_status_table_title
 ) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(rowBackgroundColor)
+    ) {
         Text(
             modifier = Modifier.weight(firstColumnWeight),
-            text = stringResource(id = firstTileId),
+            text = stringResource(id = firstTitleId),
             style = FontStyles.txt20,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center
         )
         Text(
             modifier = Modifier.weight(secondColumnWeight),
-            text = stringResource(id = secondTileId),
+            text = stringResource(id = secondTitleId),
             style = FontStyles.txt20,
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center
@@ -143,38 +150,44 @@ fun Table2ColumnHeaderRow(
 fun Table2ColumnDetailRow(
     firstColumnWeight: Float = .7f,
     secondColumnWeight: Float = .3f,
+    rowBackgroundColor: Color = SilverGray,
     isFirstColumnValueMatched: Boolean, // ถ้าไม่ใช้ ค่อยลบออก
     firstColumnValue: String,
-    secondColumnValue: String,
-    rowBottomSpace: Dp = 10.dp
+    secondColumnValue: String
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(rowBackgroundColor)
+            .padding(vertical = 6.dp)
             .height(IntrinsicSize.Min)
     ) {
         Text(
-            modifier = Modifier.weight(firstColumnWeight),
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .weight(firstColumnWeight),
             text = firstColumnValue,
             style = FontStyles.txt16,
             fontWeight = FontWeight.Medium,
             color = if (isFirstColumnValueMatched) BaseGreen else Color.Black
         )
-        Spacer(modifier = Modifier.width(10.dp))
-        Text(
+        Column(
             modifier = Modifier
-                .background(White87)
-                .padding(horizontal = 4.dp)
-                .fillMaxHeight()
-                .weight(secondColumnWeight),
-            text = secondColumnValue,
-            style = FontStyles.txt16,
-            fontWeight = FontWeight.Bold,
-            color = StatusRed,
-            textAlign = TextAlign.Center
-        )
+                .padding(horizontal = 8.dp)
+                .weight(secondColumnWeight)
+        ) {
+            Text(
+                modifier = Modifier
+                    .background(White87)
+                    .fillMaxSize(),
+                text = secondColumnValue,
+                style = FontStyles.txt16,
+                fontWeight = FontWeight.Bold,
+                color = StatusRed,
+                textAlign = TextAlign.Center
+            )
+        }
     }
-    Spacer(modifier = Modifier.height(rowBottomSpace))
 }
 
 @Preview(showBackground = true, locale = "th")
