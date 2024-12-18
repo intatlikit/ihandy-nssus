@@ -3,6 +3,7 @@ package com.nssus.ihandy.data.interceptor
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.nssus.ihandy.BuildConfig
 import com.nssus.ihandy.data.constant.AppConstant.APP_TOKEN
@@ -18,6 +19,7 @@ import com.nssus.ihandy.data.network.provideOkHttpClientForInterceptor
 import com.nssus.ihandy.data.network.provideRetrofit
 import com.nssus.ihandy.data.service.UserService
 import com.nssus.ihandy.data.util.AppUtil.getCountDownTimer
+import com.nssus.ihandy.data.util.DialogEventManager
 import okhttp3.logging.HttpLoggingInterceptor
 import java.net.HttpURLConnection
 
@@ -76,16 +78,30 @@ class AuthInterceptor(
                     return@runBlocking responseWithNewToken // อาจจะรีเทินปกติไม่ต้อง @ ไม่ก็ reponse = responseWithNewToken
                 } else {
                     println("Check response code condition is NOT Successful")
-                    // Force Restart App in Specific time
-                    Handler(Looper.getMainLooper()).apply {
-                        post {
-                            getCountDownTimer(
-                                countDownTimeInSec = REFRESH_TOKEN_API_EXPIRED_FORCE_RESTART_APP_TIME,
-                                onCountDownFinish = { context.restartIHandyApp() }
-                            ).apply { start() }
-                        }
+                    // Display Token Expired Dialog
+//                    DialogEventManager.emitDialogEvent("Your session has expired. Please log in again.")
+//                    throw UnAuthorizeException()
+
+                    // Force Restart App and Display Toast
+                    Handler(Looper.getMainLooper()).post {
+                        Toast.makeText(
+                            context,
+                            "Your session has expired. Please log in again.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        context.restartIHandyApp()
                     }
-                    throw UnAuthorizeException() // Change ur own
+
+                    // Force Restart App in Specific time
+//                    Handler(Looper.getMainLooper()).apply {
+//                        post {
+//                            getCountDownTimer(
+//                                countDownTimeInSec = REFRESH_TOKEN_API_EXPIRED_FORCE_RESTART_APP_TIME,
+//                                onCountDownFinish = { context.restartIHandyApp() }
+//                            ).apply { start() }
+//                        }
+//                    }
+//                    throw UnAuthorizeException() // Change ur own
                 }
             }
             // Retry the request with a new token if available

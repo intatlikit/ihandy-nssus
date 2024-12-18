@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.nssus.ihandy.BuildConfig
 import com.nssus.ihandy.navigation.authGraph
 import com.nssus.ihandy.navigation.constant.GraphConstant
+import com.nssus.ihandy.ui.basecomposable.DialogObserver
 import com.nssus.ihandy.ui.login.viewmodel.LoginViewModel
 import com.nssus.ihandy.ui.permission.CheckAndRequestPermission
 import com.nssus.ihandy.ui.theme.IHandyTheme
@@ -30,6 +31,8 @@ fun IHandyApp(
     ) {
         //do nothing
     }
+
+    DialogObserver()
 
     IHandyTheme {
         Surface(

@@ -1,5 +1,6 @@
 package com.nssus.ihandy.ui.basecomposable
 
+import android.app.Activity
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -17,13 +18,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.zIndex
 import com.nssus.ihandy.R
+import com.nssus.ihandy.data.extension.restartIHandyApp
+import com.nssus.ihandy.data.util.DialogEventManager
 import com.nssus.ihandy.ui.theme.BaseGray
 import com.nssus.ihandy.ui.theme.Black60
 import com.nssus.ihandy.ui.theme.DarkBlue
@@ -58,6 +66,36 @@ fun BaseDialog(
         ) {
             dialogContent()
         }
+    }
+}
+
+@Composable
+fun DialogObserver() {
+    val context = LocalContext.current
+    val dialogMessage = remember { mutableStateOf<String?>(null) }
+
+    // Collect the dialog events
+    LaunchedEffect(Unit) {
+        DialogEventManager.dialogEvents.collect { message ->
+            dialogMessage.value = message
+        }
+    }
+
+    // Show the dialog when a message is set
+    dialogMessage.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("Session Expired") },
+            text = { Text(message) },
+            confirmButton = {
+                Button(onClick = {
+                    dialogMessage.value = null
+                    context.restartIHandyApp()
+                }) {
+                    Text("OK")
+                }
+            }
+        )
     }
 }
 
