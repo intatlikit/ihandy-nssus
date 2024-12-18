@@ -166,4 +166,7 @@ dependencies {
 
     // Constraint Layout
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+
+    // Commons Net
+    implementation("commons-net:commons-net:3.9.0")
 }
