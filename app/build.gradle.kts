@@ -169,4 +169,8 @@ dependencies {
 
     // Commons Net
     implementation("commons-net:commons-net:3.9.0")
+
+    // Permission
+    implementation("com.google.accompanist:accompanist-permissions:0.30.1")
+
 }

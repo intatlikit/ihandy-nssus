@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.nssus.ihandy.data.util.NetworkUtil.getLocalIpAddress
+import com.nssus.ihandy.ui.basecomposable.CameraAndGalleryPicker
+import com.nssus.ihandy.ui.basecomposable.RequestPermissions
 import com.nssus.ihandy.ui.main.IHandyApp
 
 class MainActivity : ComponentActivity() {
@@ -18,6 +20,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             IHandyApp()
+//            RequestPermissions {
+//                CameraAndGalleryPicker()
+//            }
         }
     }
 
